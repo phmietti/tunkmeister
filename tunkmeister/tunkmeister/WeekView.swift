@@ -48,14 +48,15 @@ struct YMD {
 
 class WeekView: UIView {
 
-    var ymd: YMD
+    var selection: Int
     let days = 7
     var dayTitleLabels = [UILabel]()
     var dayButtons = [UIButton]()
     
     required init?(coder aDecoder: NSCoder) {
         let date = NSDate()
-        self.ymd = YMD(date: date)
+        self.selection = 0
+        let ymd = YMD(date: date)
         let monday = ymd.diffDays(1 - ymd.dayOfWeek())
         super.init(coder: aDecoder)
         for d in 0..<days {
@@ -69,6 +70,7 @@ class WeekView: UIView {
             let title = String(iterYmd.day)
             button.setTitle(title, forState: .Normal)
             button.setTitleColor(UIColor.blackColor(), forState: .Normal)
+            button.setTitleColor(UIColor.redColor(), forState: [.Selected, .Highlighted])
             let label = UILabel()
             label.backgroundColor = UIColor.clearColor()
             label.text = iterYmd.dayOfWeekString()
@@ -82,7 +84,7 @@ class WeekView: UIView {
     
     override func layoutSubviews() {
         let buttonSize = Int(frame.size.height)
-        var buttonFrame = CGRect(x: 0, y: 10, width: buttonSize, height: buttonSize - 10)
+        var buttonFrame = CGRect(x: 0, y: 10, width: buttonSize, height: buttonSize - 15)
         for (index, button) in dayButtons.enumerate() {
             let x = CGFloat(index * (buttonSize + 5))
             buttonFrame.origin.x = x
@@ -93,8 +95,8 @@ class WeekView: UIView {
             let x = CGFloat(index * (buttonSize + 5))
             labelFrame.origin.x = x
             label.frame = labelFrame
-            
         }
+        updateButtonSelectedState()
     }
     
     
@@ -106,7 +108,15 @@ class WeekView: UIView {
     }
     
     func daySelected(button: UIButton) {
-        
+        selection = dayButtons.indexOf(button)!
+        print(selection)
+        updateButtonSelectedState()
+    }
+    
+    func updateButtonSelectedState() {
+        for (index, button) in dayButtons.enumerate() {
+            button.selected = index == selection
+        }
     }
     /*
     // Only override drawRect: if you perform custom drawing.
