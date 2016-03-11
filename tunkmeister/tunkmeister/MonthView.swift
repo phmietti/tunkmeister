@@ -15,9 +15,15 @@ class MonthView: UIView {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        for _ in 0..<days {
+        for d in 0..<days {
             let button = UIButton()
-            button.backgroundColor = UIColor.redColor()
+            button.backgroundColor = UIColor.clearColor()
+            button.layer.cornerRadius = 5
+            button.layer.borderWidth = 1
+            button.layer.borderColor = UIColor.blackColor().CGColor
+            let title = String(d + 1)
+            button.setTitle(title, forState: .Normal)
+            button.setTitleColor(UIColor.blackColor(), forState: .Normal)
             dayButtons += [button]
             addSubview(button)
         }
@@ -48,3 +54,4 @@ class MonthView: UIView {
     */
 
 }
+
