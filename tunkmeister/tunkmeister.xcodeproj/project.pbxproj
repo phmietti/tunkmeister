@@ -12,6 +12,7 @@
 		39799A9E1C8C863100CAB61B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 39799A9C1C8C863100CAB61B /* Main.storyboard */; };
 		39799AA01C8C863100CAB61B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 39799A9F1C8C863100CAB61B /* Assets.xcassets */; };
 		39799AA31C8C863100CAB61B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 39799AA11C8C863100CAB61B /* LaunchScreen.storyboard */; };
+		39F9FAAF1C9334B200C9495A /* MonthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F9FAAE1C9334B200C9495A /* MonthView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		39799A9F1C8C863100CAB61B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		39799AA21C8C863100CAB61B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		39799AA41C8C863100CAB61B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		39F9FAAE1C9334B200C9495A /* MonthView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MonthView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 				39799A9F1C8C863100CAB61B /* Assets.xcassets */,
 				39799AA11C8C863100CAB61B /* LaunchScreen.storyboard */,
 				39799AA41C8C863100CAB61B /* Info.plist */,
+				39F9FAAE1C9334B200C9495A /* MonthView.swift */,
 			);
 			path = tunkmeister;
 			sourceTree = "<group>";
@@ -137,6 +140,7 @@
 			files = (
 				39799A9B1C8C863100CAB61B /* ViewController.swift in Sources */,
 				39799A991C8C863100CAB61B /* AppDelegate.swift in Sources */,
+				39F9FAAF1C9334B200C9495A /* MonthView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,6 +288,7 @@
 				39799AA91C8C863100CAB61B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
