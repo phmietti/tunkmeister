@@ -43,21 +43,21 @@ struct YMD {
         dateFormatter.dateFormat = "EEE"
         return dateFormatter.stringFromDate(toDate())
     }
-    
 }
 
 class WeekView: UIView {
 
     var selection: Int
+    var monday: YMD
     let days = 7
     var dayTitleLabels = [UILabel]()
     var dayButtons = [UIButton]()
     
     required init?(coder aDecoder: NSCoder) {
         let date = NSDate()
-        self.selection = 0
         let ymd = YMD(date: date)
-        let monday = ymd.diffDays(1 - ymd.dayOfWeek())
+        self.selection = 0
+        self.monday = ymd.diffDays(1 - ymd.dayOfWeek())
         super.init(coder: aDecoder)
         for d in 0..<days {
             let iterYmd = monday.diffDays(d)
@@ -66,10 +66,11 @@ class WeekView: UIView {
             button.layer.cornerRadius = 5
             button.layer.borderWidth = 1
             button.layer.borderColor = UIColor.blackColor().CGColor
-            button.addTarget(self, action: "daySelected:", forControlEvents: .TouchDown)
+            button.addTarget(self, action: "daySelected:", forControlEvents: .TouchUpInside)
             let title = String(iterYmd.day)
             button.setTitle(title, forState: .Normal)
             button.setTitleColor(UIColor.blackColor(), forState: .Normal)
+            button.setTitleColor(UIColor.redColor(), forState: .Selected)
             button.setTitleColor(UIColor.redColor(), forState: [.Selected, .Highlighted])
             let label = UILabel()
             label.backgroundColor = UIColor.clearColor()
@@ -84,22 +85,22 @@ class WeekView: UIView {
     
     override func layoutSubviews() {
         let buttonSize = Int(frame.size.height)
-        var buttonFrame = CGRect(x: 0, y: 10, width: buttonSize, height: buttonSize - 15)
+        let frameWidth = Int(frame.size.width)
+        let buttonWidth = frameWidth / days
+        var buttonFrame = CGRect(x: 0, y: 10, width: buttonWidth, height: buttonSize - 15)
         for (index, button) in dayButtons.enumerate() {
-            let x = CGFloat(index * (buttonSize + 5))
+            let x = CGFloat(index * (buttonWidth + 1))
             buttonFrame.origin.x = x
             button.frame = buttonFrame
         }
-        var labelFrame = CGRect(x: 0, y: 0, width: buttonSize, height: 10)
+        var labelFrame = CGRect(x: 0, y: 0, width: buttonWidth, height: 10)
         for (index, label) in dayTitleLabels.enumerate() {
-            let x = CGFloat(index * (buttonSize + 5))
+            let x = CGFloat(index * (buttonWidth + 1))
             labelFrame.origin.x = x
             label.frame = labelFrame
         }
         updateButtonSelectedState()
     }
-    
-    
     
     override func intrinsicContentSize() -> CGSize {
         let buttonSize = Int(frame.size.height)
@@ -108,12 +109,13 @@ class WeekView: UIView {
     }
     
     func daySelected(button: UIButton) {
+        button.selected = true
         selection = dayButtons.indexOf(button)!
         print(selection)
         updateButtonSelectedState()
     }
     
-    func updateButtonSelectedState() {
+    private func updateButtonSelectedState() {
         for (index, button) in dayButtons.enumerate() {
             button.selected = index == selection
         }
