@@ -12,6 +12,15 @@ import EventKit
 class ViewController: UIViewController {
 
     @IBOutlet weak var daySelection: WeekView!
+    @IBOutlet weak var startTimePicker: StartTimePicker!
+    @IBOutlet weak var endTimePicker: EndTimePicker!
+    
+    @IBAction func startTimeChanged(sender: StartTimePicker) {
+    }
+    
+    @IBAction func endTimeChanged(sender: EndTimePicker) {
+        
+    }
     
     @IBAction func saveEvent(sender: UIButton) {
         let eventStore = EKEventStore()
@@ -22,10 +31,9 @@ class ViewController: UIViewController {
                 let event = EKEvent(eventStore: eventStore)
                 event.title = "tunkmeister test"
                 let date = self.daySelection.monday.diffDays(self.daySelection.selection).toDate()
-                event.startDate = NSCalendar.currentCalendar().dateBySettingHour(8, minute: 30, second: 0, ofDate: date, options: NSCalendarOptions())!
-                event.endDate = NSCalendar.currentCalendar().dateBySettingHour(16, minute: 0, second: 0, ofDate: date, options: NSCalendarOptions())!
+                event.startDate = NSCalendar.currentCalendar().dateBySettingHour(self.startTimePicker.date.hour(), minute: self.startTimePicker.date.minutes(), second: 0, ofDate: date, options: NSCalendarOptions())!
+                event.endDate = NSCalendar.currentCalendar().dateBySettingHour(self.endTimePicker.date.hour(), minute: self.endTimePicker.date.minutes(), second: 0, ofDate: date, options: NSCalendarOptions())!
                 event.calendar = eventStore.defaultCalendarForNewEvents
-                
                 do {
                     try eventStore.saveEvent(event, span: .ThisEvent)
                     print("event added " + event.eventIdentifier)
@@ -35,9 +43,8 @@ class ViewController: UIViewController {
                 }
             }
             })
-            
-            
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
