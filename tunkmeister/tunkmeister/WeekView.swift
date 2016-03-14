@@ -87,7 +87,7 @@ class WeekView: UIView {
     override func layoutSubviews() {
         let buttonSize = Int(frame.size.height)
         let frameWidth = Int(frame.size.width)
-        let buttonWidth = frameWidth / daysInWeek
+        let buttonWidth = frameWidth / (daysInWeek + 1)
         var buttonFrame = CGRect(x: 0, y: 10, width: buttonWidth, height: buttonSize - 15)
         for (index, button) in dayButtons.enumerate() {
             let x = CGFloat(index * (buttonWidth + 1))
@@ -103,11 +103,6 @@ class WeekView: UIView {
         updateViewState()
     }
     
-    override func intrinsicContentSize() -> CGSize {
-        let buttonSize = Int(frame.size.height)
-        let width = (buttonSize + 5) * daysInWeek
-        return CGSize(width: width, height: buttonSize)
-    }
     
     func daySelected(button: UIButton) {
         button.selected = true

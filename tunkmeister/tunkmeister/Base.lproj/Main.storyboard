@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="4aD-Ri-fXD">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
@@ -14,25 +14,28 @@
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" placeholderIntrinsicWidth="600" placeholderIntrinsicHeight="600" id="8bC-Xf-vdC">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="tbB-po-kQM">
-                                <rect key="frame" x="28" y="8" width="544" height="617"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="tbB-po-kQM">
+                                <rect key="frame" x="20" y="72" width="560" height="624.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Month" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ydv-VW-ZMm">
-                                        <rect key="frame" x="248" y="0.0" width="50" height="21"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="560" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <view contentMode="scaleToFill" placeholderIntrinsicWidth="560" placeholderIntrinsicHeight="64" translatesAutoresizingMaskIntoConstraints="NO" id="CBC-uZ-hrH" customClass="WeekView" customModule="tunkmeister" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="29" width="544" height="64"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CBC-uZ-hrH" customClass="WeekView" customModule="tunkmeister" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28.5" width="560" height="72"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="72" id="JcX-zc-H7u"/>
+                                        </constraints>
                                     </view>
                                     <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="AIb-qW-qxr" customClass="StartTimePicker" customModule="tunkmeister" customModuleProvider="target">
-                                        <rect key="frame" x="112" y="101" width="320" height="216"/>
+                                        <rect key="frame" x="0.0" y="108.5" width="560" height="216"/>
                                         <date key="date" timeIntervalSinceReferenceDate="479457754.33291602">
                                             <!--2016-03-12 06:42:34 +0000-->
                                         </date>
@@ -41,7 +44,7 @@
                                         </connections>
                                     </datePicker>
                                     <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="LaB-K1-NyR" customClass="EndTimePicker" customModule="tunkmeister" customModuleProvider="target">
-                                        <rect key="frame" x="112" y="325" width="320" height="216"/>
+                                        <rect key="frame" x="0.0" y="332.5" width="560" height="216"/>
                                         <date key="date" timeIntervalSinceReferenceDate="479579681.498806">
                                             <!--2016-03-13 16:34:41 +0000-->
                                         </date>
@@ -50,14 +53,14 @@
                                         </connections>
                                     </datePicker>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PYs-Pu-ix8">
-                                        <rect key="frame" x="255" y="549" width="34" height="30"/>
+                                        <rect key="frame" x="0.0" y="556.5" width="560" height="30"/>
                                         <state key="normal" title="Save"/>
                                         <connections>
                                             <action selector="saveEvent:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vUo-Pe-GgU"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cnO-EB-CJn" userLabel="Skip">
-                                        <rect key="frame" x="257" y="587" width="30" height="30"/>
+                                        <rect key="frame" x="0.0" y="594.5" width="560" height="30"/>
                                         <state key="normal" title="Skip"/>
                                         <connections>
                                             <action selector="skipDay:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kQS-0B-DPJ"/>
@@ -68,11 +71,12 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="tbB-po-kQM" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" constant="8" id="WwZ-kc-ffW"/>
-                            <constraint firstItem="tbB-po-kQM" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="8" id="nn0-e0-FlS"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="tbB-po-kQM" secondAttribute="trailing" constant="8" id="qzo-sO-WQu"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="tbB-po-kQM" secondAttribute="trailing" id="0PH-qP-svc"/>
+                            <constraint firstItem="tbB-po-kQM" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" symbolic="YES" id="Fd3-sB-ph5"/>
+                            <constraint firstItem="tbB-po-kQM" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="j8Z-Sv-qkU"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="vPh-oW-2Fr"/>
                     <connections>
                         <outlet property="daySelection" destination="CBC-uZ-hrH" id="Lem-H7-q56"/>
                         <outlet property="endTimePicker" destination="LaB-K1-NyR" id="ubg-qT-Zxq"/>
@@ -80,6 +84,24 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1128" y="487"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="EmS-Zf-tVw">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="4aD-Ri-fXD" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="sIM-7o-evO">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="als-Gi-lby"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7od-ma-hZU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="351" y="440"/>
         </scene>
