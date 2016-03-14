@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="tbB-po-kQM">
-                                <rect key="frame" x="28" y="8" width="544" height="579"/>
+                                <rect key="frame" x="28" y="8" width="544" height="617"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Month" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ydv-VW-ZMm">
                                         <rect key="frame" x="248" y="0.0" width="50" height="21"/>
@@ -54,6 +54,13 @@
                                         <state key="normal" title="Save"/>
                                         <connections>
                                             <action selector="saveEvent:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vUo-Pe-GgU"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cnO-EB-CJn" userLabel="Skip">
+                                        <rect key="frame" x="257" y="587" width="30" height="30"/>
+                                        <state key="normal" title="Skip"/>
+                                        <connections>
+                                            <action selector="skipDay:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kQS-0B-DPJ"/>
                                         </connections>
                                     </button>
                                 </subviews>

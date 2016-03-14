@@ -100,7 +100,7 @@ class WeekView: UIView {
             labelFrame.origin.x = x
             label.frame = labelFrame
         }
-        updateButtonSelectedState()
+        updateViewState()
     }
     
     override func intrinsicContentSize() -> CGSize {
@@ -112,36 +112,42 @@ class WeekView: UIView {
     func daySelected(button: UIButton) {
         button.selected = true
         selection = dayButtons.indexOf(button)!
-        updateButtonSelectedState()
+        updateViewState()
     }
     
     func nextDay() {
         if (selection == daysInWeek - 1) {
             firstDayOfWeek = firstDayOfWeek.diffDays(daysInWeek)
             selection = 0
-            for d in 0..<daysInWeek {
-                let iterYmd = firstDayOfWeek.diffDays(d)
-                let title = String(iterYmd.day)
-                dayButtons[d].setTitle(title, forState: .Normal)
-            }
         } else {
             selection += 1
         }
-        updateButtonSelectedState()
+        updateViewState()
     }
     
-    private func updateButtonSelectedState() {
+    func nextWeek() {
+        firstDayOfWeek = firstDayOfWeek.diffDays(daysInWeek)
+        updateViewState()
+        UIView.transitionWithView(self, duration: 0.5, options: UIViewAnimationOptions.TransitionFlipFromRight, animations: { () -> Void in }) { (success) -> Void in
+        }
+    }
+    
+    func previousWeek() {
+        firstDayOfWeek = firstDayOfWeek.diffDays(-daysInWeek)
+        updateViewState()
+        UIView.transitionWithView(self, duration: 0.5, options: UIViewAnimationOptions.TransitionFlipFromLeft, animations: { () -> Void in }) { (success) -> Void in
+        }
+    }
+    
+    private func updateViewState() {
         for (index, button) in dayButtons.enumerate() {
             button.selected = index == selection
         }
+        for d in 0..<daysInWeek {
+            let iterYmd = firstDayOfWeek.diffDays(d)
+            let title = String(iterYmd.day)
+            dayButtons[d].setTitle(title, forState: .Normal)
+        }
     }
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-        // Drawing code
-    }
-    */
-
 }
 

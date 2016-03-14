@@ -22,6 +22,10 @@ class ViewController: UIViewController {
         
     }
     
+    @IBAction func skipDay(sender: UIButton) {
+        daySelection.nextDay()
+    }
+    
     @IBAction func saveEvent(sender: UIButton) {
         let eventStore = EKEventStore()
         eventStore.requestAccessToEntityType(.Event, completion: {(granted, error) in
@@ -48,7 +52,24 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        let directions: [UISwipeGestureRecognizerDirection] = [.Left, .Right]
+        for d in directions {
+            let gesture = UISwipeGestureRecognizer(target: self, action: "handleSwipe:")
+            gesture.direction = d
+            daySelection.addGestureRecognizer(gesture)
+        }
+    }
+    
+    func handleSwipe(sender: UISwipeGestureRecognizer) {
+        switch sender.direction {
+        case UISwipeGestureRecognizerDirection.Left:
+            daySelection.nextWeek()
+        case UISwipeGestureRecognizerDirection.Right:
+            daySelection.previousWeek()
+        default :
+            print("voe lol")
+        }
+        print(sender.direction)
     }
 
     override func didReceiveMemoryWarning() {
