@@ -30,7 +30,7 @@ class ViewController: UIViewController {
             } else {
                 let event = EKEvent(eventStore: eventStore)
                 event.title = "tunkmeister test"
-                let date = self.daySelection.monday.diffDays(self.daySelection.selection).toDate()
+                let date = self.daySelection.firstDayOfWeek.diffDays(self.daySelection.selection).toDate()
                 event.startDate = NSCalendar.currentCalendar().dateBySettingHour(self.startTimePicker.date.hour(), minute: self.startTimePicker.date.minutes(), second: 0, ofDate: date, options: NSCalendarOptions())!
                 event.endDate = NSCalendar.currentCalendar().dateBySettingHour(self.endTimePicker.date.hour(), minute: self.endTimePicker.date.minutes(), second: 0, ofDate: date, options: NSCalendarOptions())!
                 event.calendar = eventStore.defaultCalendarForNewEvents
@@ -43,6 +43,7 @@ class ViewController: UIViewController {
                 }
             }
             })
+        daySelection.nextDay()
     }
     
     override func viewDidLoad() {

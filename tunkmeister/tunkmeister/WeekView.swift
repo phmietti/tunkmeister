@@ -43,13 +43,14 @@ struct YMD {
         dateFormatter.dateFormat = "EEE"
         return dateFormatter.stringFromDate(toDate())
     }
+    
 }
 
 class WeekView: UIView {
 
     var selection: Int
-    var monday: YMD
-    let days = 7
+    var firstDayOfWeek: YMD
+    let daysInWeek = 7
     var dayTitleLabels = [UILabel]()
     var dayButtons = [UIButton]()
     
@@ -57,10 +58,10 @@ class WeekView: UIView {
         let date = NSDate()
         let ymd = YMD(date: date)
         self.selection = 0
-        self.monday = ymd.diffDays(1 - ymd.dayOfWeek())
+        self.firstDayOfWeek = ymd.diffDays(1 - ymd.dayOfWeek())
         super.init(coder: aDecoder)
-        for d in 0..<days {
-            let iterYmd = monday.diffDays(d)
+        for d in 0..<daysInWeek {
+            let iterYmd = firstDayOfWeek.diffDays(d)
             let button = UIButton()
             button.backgroundColor = UIColor.clearColor()
             button.layer.cornerRadius = 5
@@ -86,7 +87,7 @@ class WeekView: UIView {
     override func layoutSubviews() {
         let buttonSize = Int(frame.size.height)
         let frameWidth = Int(frame.size.width)
-        let buttonWidth = frameWidth / days
+        let buttonWidth = frameWidth / daysInWeek
         var buttonFrame = CGRect(x: 0, y: 10, width: buttonWidth, height: buttonSize - 15)
         for (index, button) in dayButtons.enumerate() {
             let x = CGFloat(index * (buttonWidth + 1))
@@ -104,14 +105,28 @@ class WeekView: UIView {
     
     override func intrinsicContentSize() -> CGSize {
         let buttonSize = Int(frame.size.height)
-        let width = (buttonSize + 5) * days
+        let width = (buttonSize + 5) * daysInWeek
         return CGSize(width: width, height: buttonSize)
     }
     
     func daySelected(button: UIButton) {
         button.selected = true
         selection = dayButtons.indexOf(button)!
-        print(selection)
+        updateButtonSelectedState()
+    }
+    
+    func nextDay() {
+        if (selection == daysInWeek - 1) {
+            firstDayOfWeek = firstDayOfWeek.diffDays(daysInWeek)
+            selection = 0
+            for d in 0..<daysInWeek {
+                let iterYmd = firstDayOfWeek.diffDays(d)
+                let title = String(iterYmd.day)
+                dayButtons[d].setTitle(title, forState: .Normal)
+            }
+        } else {
+            selection += 1
+        }
         updateButtonSelectedState()
     }
     
