@@ -54,7 +54,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         let directions: [UISwipeGestureRecognizerDirection] = [.Left, .Right]
         for d in directions {
-            let gesture = UISwipeGestureRecognizer(target: self, action: "handleSwipe:")
+            let gesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe))
             gesture.direction = d
             daySelection.addGestureRecognizer(gesture)
         }

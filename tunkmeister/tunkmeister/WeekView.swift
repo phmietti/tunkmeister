@@ -67,7 +67,7 @@ class WeekView: UIView {
             button.layer.cornerRadius = 5
             button.layer.borderWidth = 1
             button.layer.borderColor = UIColor.blackColor().CGColor
-            button.addTarget(self, action: "daySelected:", forControlEvents: .TouchUpInside)
+            button.addTarget(self, action: #selector(daySelected), forControlEvents: .TouchUpInside)
             let title = String(iterYmd.day)
             button.setTitle(title, forState: .Normal)
             button.setTitleColor(UIColor.blackColor(), forState: .Normal)
