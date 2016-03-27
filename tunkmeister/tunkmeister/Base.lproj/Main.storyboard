@@ -37,7 +37,7 @@
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Start time" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="g2L-Ms-reU">
                                         <rect key="frame" x="0.0" y="109" width="560" height="30"/>
                                         <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                         <connections>
                                             <action selector="startDateEditing:" destination="BYZ-38-t0r" eventType="editingDidBegin" id="dp2-r8-e8U"/>
@@ -51,18 +51,18 @@
                                             <action selector="endTimeEditing:" destination="BYZ-38-t0r" eventType="editingDidBegin" id="pWw-cC-cfi"/>
                                         </connections>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PYs-Pu-ix8">
-                                        <rect key="frame" x="0.0" y="185" width="560" height="30"/>
-                                        <state key="normal" title="Save"/>
-                                        <connections>
-                                            <action selector="saveEvent:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vUo-Pe-GgU"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cnO-EB-CJn" userLabel="Skip">
-                                        <rect key="frame" x="0.0" y="223" width="560" height="30"/>
+                                        <rect key="frame" x="0.0" y="185" width="560" height="30"/>
                                         <state key="normal" title="Skip"/>
                                         <connections>
                                             <action selector="skipDay:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kQS-0B-DPJ"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PYs-Pu-ix8">
+                                        <rect key="frame" x="0.0" y="223" width="560" height="30"/>
+                                        <state key="normal" title="Save"/>
+                                        <connections>
+                                            <action selector="saveEvent:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vUo-Pe-GgU"/>
                                         </connections>
                                     </button>
                                 </subviews>

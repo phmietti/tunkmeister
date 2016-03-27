@@ -17,7 +17,6 @@ class ViewController: UIViewController {
     var startTime: NSDate!
     var endTime: NSDate!
    
-    
     @IBAction func skipDay(sender: UIButton) {
         daySelection.nextDay()
     }
@@ -26,23 +25,28 @@ class ViewController: UIViewController {
     let END = 2
     
     @IBAction func startDateEditing(sender: UITextField) {
-        startEditingTime(sender, tag: START)
+        startEditingTime(sender, tag: START, date: startTime, minimumDate: nil, maximumDate: endTime)
     }
     
     @IBAction func endTimeEditing(sender: UITextField) {
-        startEditingTime(sender, tag: END)
+        startEditingTime(sender, tag: END, date: endTime, minimumDate: startTime, maximumDate: nil)
     }
-    func startEditingTime(sender: UITextField, tag: Int) {
+    
+    func startEditingTime(sender: UITextField, tag: Int, date: NSDate?, minimumDate: NSDate?, maximumDate: NSDate?) {
         let picker = UIDatePicker()
         picker.datePickerMode = .Time
         picker.minuteInterval = 15
         picker.tag = tag
+        if (date != nil) {
+            picker.date = date!
+        }
+        picker.minimumDate = minimumDate
+        picker.maximumDate = maximumDate
         picker.date = daySelection.currentDay().toDate()
         picker.addTarget(self, action: #selector(eventTimeChanged), forControlEvents: UIControlEvents.ValueChanged)
         sender.inputView = picker
-        
     }
-
+    
     func eventTimeChanged(sender: UIDatePicker) {
         let dateFormatter = NSDateFormatter()
         dateFormatter.timeStyle = .ShortStyle
@@ -65,7 +69,7 @@ class ViewController: UIViewController {
                 print("error")
             } else {
                 let event = EKEvent(eventStore: eventStore)
-                event.title = "tunkmeister test"
+                event.title = "tm-event"
                 event.startDate = self.startTime
                 event.endDate = self.endTime
                 event.calendar = eventStore.defaultCalendarForNewEvents
