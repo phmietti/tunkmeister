@@ -12,18 +12,50 @@ import EventKit
 class ViewController: UIViewController {
 
     @IBOutlet weak var daySelection: WeekView!
-    @IBOutlet weak var startTimePicker: StartTimePicker!
-    @IBOutlet weak var endTimePicker: EndTimePicker!
-    
-    @IBAction func startTimeChanged(sender: StartTimePicker) {
-    }
-    
-    @IBAction func endTimeChanged(sender: EndTimePicker) {
-        
-    }
+    @IBOutlet weak var startTimeField: UITextField!
+    @IBOutlet weak var endTimeField: UITextField!
+    var startTime: NSDate!
+    var endTime: NSDate!
+   
     
     @IBAction func skipDay(sender: UIButton) {
         daySelection.nextDay()
+    }
+    
+    let START = 1
+    let END = 2
+    
+    @IBAction func startDateEditing(sender: UITextField) {
+        startEditingTime(sender, tag: START)
+    }
+    
+    @IBAction func endTimeEditing(sender: UITextField) {
+        startEditingTime(sender, tag: END)
+    }
+    func startEditingTime(sender: UITextField, tag: Int) {
+        let picker = UIDatePicker()
+        picker.datePickerMode = .Time
+        picker.minuteInterval = 15
+        picker.tag = tag
+        picker.date = daySelection.currentDay().toDate()
+        picker.addTarget(self, action: #selector(eventTimeChanged), forControlEvents: UIControlEvents.ValueChanged)
+        sender.inputView = picker
+        
+    }
+
+    func eventTimeChanged(sender: UIDatePicker) {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.timeStyle = .ShortStyle
+        switch sender.tag {
+        case START:
+            startTimeField.text = dateFormatter.stringFromDate(sender.date)
+            self.startTime = sender.date
+        case END:
+            endTimeField.text = dateFormatter.stringFromDate(sender.date)
+            self.endTime = sender.date
+        default:
+            print("Lol")
+        }
     }
     
     @IBAction func saveEvent(sender: UIButton) {
@@ -34,9 +66,8 @@ class ViewController: UIViewController {
             } else {
                 let event = EKEvent(eventStore: eventStore)
                 event.title = "tunkmeister test"
-                let date = self.daySelection.firstDayOfWeek.diffDays(self.daySelection.selection).toDate()
-                event.startDate = NSCalendar.currentCalendar().dateBySettingHour(self.startTimePicker.date.hour(), minute: self.startTimePicker.date.minutes(), second: 0, ofDate: date, options: NSCalendarOptions())!
-                event.endDate = NSCalendar.currentCalendar().dateBySettingHour(self.endTimePicker.date.hour(), minute: self.endTimePicker.date.minutes(), second: 0, ofDate: date, options: NSCalendarOptions())!
+                event.startDate = self.startTime
+                event.endDate = self.endTime
                 event.calendar = eventStore.defaultCalendarForNewEvents
                 do {
                     try eventStore.saveEvent(event, span: .ThisEvent)

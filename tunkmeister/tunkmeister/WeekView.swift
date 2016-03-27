@@ -57,8 +57,8 @@ class WeekView: UIView {
     required init?(coder aDecoder: NSCoder) {
         let date = NSDate()
         let ymd = YMD(date: date)
-        self.selection = 0
-        self.firstDayOfWeek = ymd.diffDays(1 - ymd.dayOfWeek())
+        self.selection = ymd.dayOfWeek() - 1
+        self.firstDayOfWeek = ymd.diffDays(-self.selection)
         super.init(coder: aDecoder)
         for d in 0..<daysInWeek {
             let iterYmd = firstDayOfWeek.diffDays(d)
@@ -132,6 +132,10 @@ class WeekView: UIView {
         updateViewState()
         UIView.transitionWithView(self, duration: 0.5, options: UIViewAnimationOptions.TransitionFlipFromLeft, animations: { () -> Void in }) { (success) -> Void in
         }
+    }
+    
+    func currentDay() -> YMD {
+        return firstDayOfWeek.diffDays(selection)
     }
     
     private func updateViewState() {
