@@ -16,6 +16,7 @@ class ViewController: UIViewController, WeekViewDelegate {
     @IBOutlet weak var endTimeField: UITextField!
     var startTime: NSDate!
     var endTime: NSDate!
+    var event: CalendarEvent?
     
     @IBAction func skipDay(sender: UIButton) {
         nextDay()
@@ -68,7 +69,7 @@ class ViewController: UIViewController, WeekViewDelegate {
     }
     
     @IBAction func saveEvent(sender: UIButton) {
-        Calendar.saveEvent(CalendarEvent(startDate: startTime, endDate: endTime), callback: {
+        Calendar.saveEvent(startDate: startTime, endDate: endTime, existingEventId: event?.eventIdentifier, callback: {
             dispatch_async(dispatch_get_main_queue()) {
               self.nextDay()
             }
@@ -110,7 +111,7 @@ class ViewController: UIViewController, WeekViewDelegate {
     }
     
     func dayChanged(ymd: YMD, event: CalendarEvent?) {
-        print(ymd)
+        self.event = event
         startTime = event?.startDate ?? ymd.toDate(startTime.hour(), minutes: startTime.minutes())
         updateDateText(START, date: startTime)
         endTime = event?.endDate ?? ymd.toDate(endTime.hour(), minutes: endTime.minutes())

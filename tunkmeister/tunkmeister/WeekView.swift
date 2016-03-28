@@ -169,11 +169,7 @@ class WeekView: UIView {
                 let dayEvents = events.filter {
                     (e) in YMD(date: e.startDate) == iterYmd
                 }
-                if (!dayEvents.isEmpty) {
-                    button.layer.borderColor = UIColor.blackColor().CGColor
-                } else {
-                    button.layer.borderColor = UIColor.whiteColor().CGColor
-                }
+                button.layer.borderColor = dayEvents.isEmpty ? UIColor.whiteColor().CGColor : UIColor.blackColor().CGColor
                 if (d == self.selection) {
                     self.delegate?.dayChanged(self.currentDay(), event: dayEvents.first)
                 }
