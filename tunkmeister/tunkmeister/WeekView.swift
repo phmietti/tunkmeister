@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import EventKit
 
 struct YMD : Equatable {
     let year: Int
@@ -58,7 +59,7 @@ func ==(lhs: YMD, rhs: YMD) -> Bool {
 }
 
 protocol WeekViewDelegate {
-    func dayChanged(ymd: YMD, event: CalendarEvent?)
+    func dayChanged(ymd: YMD, event: EKEvent?)
 }
 
 

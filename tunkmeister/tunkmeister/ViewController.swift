@@ -16,7 +16,7 @@ class ViewController: UIViewController, WeekViewDelegate {
     @IBOutlet weak var endTimeField: UITextField!
     var startTime: NSDate!
     var endTime: NSDate!
-    var event: CalendarEvent?
+    var event: EKEvent?
     
     @IBAction func skipDay(sender: UIButton) {
         nextDay()
@@ -43,9 +43,14 @@ class ViewController: UIViewController, WeekViewDelegate {
         }
         picker.minimumDate = minimumDate
         picker.maximumDate = maximumDate
-        picker.date = daySelection.currentDay().toDate()
+        picker.date = date ?? daySelection.currentDay().toDate()
         picker.addTarget(self, action: #selector(eventTimeChanged), forControlEvents: UIControlEvents.ValueChanged)
+        picker.addTarget(self, action: #selector(closePicker), forControlEvents: .EditingDidEnd)
         sender.inputView = picker
+    }
+    
+    func closePicker(sender: UIDatePicker) {
+        sender.resignFirstResponder()
     }
     
     func eventTimeChanged(sender: UIDatePicker) {
@@ -53,15 +58,16 @@ class ViewController: UIViewController, WeekViewDelegate {
         updateDateText(tag, date: sender.date)
     }
     
-    func updateDateText(tag: Int, date: NSDate) {
+    func updateDateText(tag: Int, date: NSDate?) {
         let dateFormatter = NSDateFormatter()
         dateFormatter.timeStyle = .ShortStyle
+        let text = date != nil ? dateFormatter.stringFromDate(date!) : ""
         switch tag {
         case START:
-            startTimeField.text = dateFormatter.stringFromDate(date)
+            startTimeField.text = text
             self.startTime = date
         case END:
-            endTimeField.text = dateFormatter.stringFromDate(date)
+            endTimeField.text = text
             self.endTime = date
         default:
             print("Lol")
@@ -69,7 +75,7 @@ class ViewController: UIViewController, WeekViewDelegate {
     }
     
     @IBAction func saveEvent(sender: UIButton) {
-        Calendar.saveEvent(startDate: startTime, endDate: endTime, existingEventId: event?.eventIdentifier, callback: {
+        Calendar.saveEvent(startTime, endDate: endTime, existingEvent: event, callback: {
             dispatch_async(dispatch_get_main_queue()) {
               self.nextDay()
             }
@@ -110,11 +116,11 @@ class ViewController: UIViewController, WeekViewDelegate {
         
     }
     
-    func dayChanged(ymd: YMD, event: CalendarEvent?) {
+    func dayChanged(ymd: YMD, event: EKEvent?) {
         self.event = event
-        startTime = event?.startDate ?? ymd.toDate(startTime.hour(), minutes: startTime.minutes())
+        startTime = event?.startDate
         updateDateText(START, date: startTime)
-        endTime = event?.endDate ?? ymd.toDate(endTime.hour(), minutes: endTime.minutes())
+        endTime = event?.endDate
         updateDateText(END, date: endTime)
     }
    
