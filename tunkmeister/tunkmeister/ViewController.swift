@@ -18,7 +18,7 @@ class ViewController: UIViewController {
     var endTime: NSDate!
     
     @IBAction func skipDay(sender: UIButton) {
-        daySelection.nextDay()
+        nextDay()
     }
     
     let START = 1
@@ -63,8 +63,12 @@ class ViewController: UIViewController {
     }
     
     @IBAction func saveEvent(sender: UIButton) {
-        Calendar.saveEvent(startTime, endDate: endTime)
-        daySelection.nextDay()
+        Calendar.saveEvent(startTime, endDate: endTime, callback: {
+            dispatch_async(dispatch_get_main_queue()) {
+              self.nextDay()
+            }
+        })
+        
     }
     
     override func viewDidLoad() {
@@ -92,6 +96,13 @@ class ViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func nextDay() {
+        self.daySelection.nextDay()
+        startTime = self.daySelection.currentDay().toDate(NSCalendar.currentCalendar().component(.Hour, fromDate: startTime), minutes: NSCalendar.currentCalendar().component(.Minute, fromDate: startTime))
+        endTime = self.daySelection.currentDay().toDate(NSCalendar.currentCalendar().component(.Hour, fromDate: endTime), minutes: NSCalendar.currentCalendar().component(.Minute, fromDate: endTime))
+        
     }
 
 

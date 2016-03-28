@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct YMD {
+struct YMD : Equatable {
     let year: Int
     let month: Int
     let day: Int
@@ -19,12 +19,19 @@ struct YMD {
         day = NSCalendar.currentCalendar().components(NSCalendarUnit.Day, fromDate: date).day
     }
     
+   
     func toDate() -> NSDate {
+        return toDate(0, minutes: 0)
+    }
+    
+    func toDate(hour: Int, minutes: Int) -> NSDate {
         let c = NSDateComponents()
         c.year = year
         c.month = month
         c.day = day
-    
+        c.hour = hour
+        c.minute = minutes
+        
         return NSCalendar.currentCalendar().dateFromComponents(c)!
     }
     
@@ -46,6 +53,11 @@ struct YMD {
     
 }
 
+func ==(lhs: YMD, rhs: YMD) -> Bool {
+    return lhs.year == rhs.year && lhs.month == rhs.month && lhs.day == rhs.day
+}
+
+
 class WeekView: UIView {
 
     var selection: Int
@@ -66,7 +78,7 @@ class WeekView: UIView {
             button.backgroundColor = UIColor.clearColor()
             button.layer.cornerRadius = 5
             button.layer.borderWidth = 1
-            button.layer.borderColor = UIColor.blackColor().CGColor
+            button.layer.borderColor = UIColor.whiteColor().CGColor
             button.addTarget(self, action: #selector(daySelected), forControlEvents: .TouchUpInside)
             let title = String(iterYmd.day)
             button.setTitle(title, forState: .Normal)
@@ -142,11 +154,25 @@ class WeekView: UIView {
         for (index, button) in dayButtons.enumerate() {
             button.selected = index == selection
         }
-        for d in 0..<daysInWeek {
-            let iterYmd = firstDayOfWeek.diffDays(d)
-            let title = String(iterYmd.day)
-            dayButtons[d].setTitle(title, forState: .Normal)
-        }
+        Calendar.getEvents(firstDayOfWeek, end: firstDayOfWeek.diffDays(daysInWeek), callback: { events in
+            dispatch_async(dispatch_get_main_queue()) {
+            for d in 0..<self.daysInWeek {
+                let iterYmd = self.firstDayOfWeek.diffDays(d)
+                let title = String(iterYmd.day)
+                let button = self.dayButtons[d]
+                button.setTitle(title, forState: .Normal)
+                let dayEvents = events.filter {
+                    (e) in YMD(date: e.startDate) == iterYmd
+                }
+                if (!dayEvents.isEmpty) {
+                    button.layer.borderColor = UIColor.blackColor().CGColor 
+                } else {
+                    button.layer.borderColor = UIColor.whiteColor().CGColor
+                }
+            }
+            }
+        })
+        
     }
 }
 
