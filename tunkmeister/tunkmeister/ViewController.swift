@@ -16,7 +16,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var endTimeField: UITextField!
     var startTime: NSDate!
     var endTime: NSDate!
-   
+    
     @IBAction func skipDay(sender: UIButton) {
         daySelection.nextDay()
     }
@@ -63,25 +63,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func saveEvent(sender: UIButton) {
-        let eventStore = EKEventStore()
-        eventStore.requestAccessToEntityType(.Event, completion: {(granted, error) in
-            if !granted || error != nil {
-                print("error")
-            } else {
-                let event = EKEvent(eventStore: eventStore)
-                event.title = "tm-event"
-                event.startDate = self.startTime
-                event.endDate = self.endTime
-                event.calendar = eventStore.defaultCalendarForNewEvents
-                do {
-                    try eventStore.saveEvent(event, span: .ThisEvent)
-                    print("event added " + event.eventIdentifier)
-                }
-                catch let error as NSError {
-                    print("no voe lol \(error.localizedDescription)")
-                }
-            }
-            })
+        Calendar.saveEvent(startTime, endDate: endTime)
         daySelection.nextDay()
     }
     
