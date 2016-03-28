@@ -9,7 +9,7 @@
 import UIKit
 import EventKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, WeekViewDelegate {
 
     @IBOutlet weak var daySelection: WeekView!
     @IBOutlet weak var startTimeField: UITextField!
@@ -48,22 +48,27 @@ class ViewController: UIViewController {
     }
     
     func eventTimeChanged(sender: UIDatePicker) {
+        let tag = sender.tag
+        updateDateText(tag, date: sender.date)
+    }
+    
+    func updateDateText(tag: Int, date: NSDate) {
         let dateFormatter = NSDateFormatter()
         dateFormatter.timeStyle = .ShortStyle
-        switch sender.tag {
+        switch tag {
         case START:
-            startTimeField.text = dateFormatter.stringFromDate(sender.date)
-            self.startTime = sender.date
+            startTimeField.text = dateFormatter.stringFromDate(date)
+            self.startTime = date
         case END:
-            endTimeField.text = dateFormatter.stringFromDate(sender.date)
-            self.endTime = sender.date
+            endTimeField.text = dateFormatter.stringFromDate(date)
+            self.endTime = date
         default:
             print("Lol")
         }
     }
     
     @IBAction func saveEvent(sender: UIButton) {
-        Calendar.saveEvent(startTime, endDate: endTime, callback: {
+        Calendar.saveEvent(CalendarEvent(startDate: startTime, endDate: endTime), callback: {
             dispatch_async(dispatch_get_main_queue()) {
               self.nextDay()
             }
@@ -79,6 +84,7 @@ class ViewController: UIViewController {
             gesture.direction = d
             daySelection.addGestureRecognizer(gesture)
         }
+        daySelection.delegate = self
     }
     
     func handleSwipe(sender: UISwipeGestureRecognizer) {
@@ -100,11 +106,16 @@ class ViewController: UIViewController {
     
     func nextDay() {
         self.daySelection.nextDay()
-        startTime = self.daySelection.currentDay().toDate(NSCalendar.currentCalendar().component(.Hour, fromDate: startTime), minutes: NSCalendar.currentCalendar().component(.Minute, fromDate: startTime))
-        endTime = self.daySelection.currentDay().toDate(NSCalendar.currentCalendar().component(.Hour, fromDate: endTime), minutes: NSCalendar.currentCalendar().component(.Minute, fromDate: endTime))
         
     }
-
-
+    
+    func dayChanged(ymd: YMD, event: CalendarEvent?) {
+        print(ymd)
+        startTime = event?.startDate ?? ymd.toDate(startTime.hour(), minutes: startTime.minutes())
+        updateDateText(START, date: startTime)
+        endTime = event?.endDate ?? ymd.toDate(endTime.hour(), minutes: endTime.minutes())
+        updateDateText(END, date: endTime)
+    }
+   
 }
 

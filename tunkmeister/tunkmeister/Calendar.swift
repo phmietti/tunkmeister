@@ -8,9 +8,14 @@
 
 import EventKitUI
 
+struct CalendarEvent {
+    let startDate: NSDate
+    let endDate: NSDate
+}
+
 struct Calendar {
     
-    static func saveEvent(startDate: NSDate, endDate: NSDate, callback: () -> Void) {
+    static func saveEvent(calendarEvent: CalendarEvent, callback: () -> Void) {
         let eventStore = EKEventStore()
         eventStore.requestAccessToEntityType(.Event, completion: {(granted, error) in
             if !granted || error != nil {
@@ -18,8 +23,8 @@ struct Calendar {
             } else {
                 let event = EKEvent(eventStore: eventStore)
                 event.title = "tm-event"
-                event.startDate = startDate
-                event.endDate = endDate
+                event.startDate = calendarEvent.startDate
+                event.endDate = calendarEvent.endDate
                 event.calendar = eventStore.defaultCalendarForNewEvents
                 do {
                     try eventStore.saveEvent(event, span: .ThisEvent)
@@ -34,15 +39,15 @@ struct Calendar {
         })
     }
     
-    static func getEvents(start: YMD, end: YMD, callback: ([EKEvent]) -> Void) {
+    static func getEvents(start: YMD, end: YMD, callback: ([CalendarEvent]) -> Void) {
         let eventStore = EKEventStore()
         eventStore.requestAccessToEntityType(.Event, completion: {(granted, error) in
             if !granted || error != nil {
                 print("error")
             } else {
                 let predicate = eventStore.predicateForEventsWithStartDate(start.toDate(), endDate: end.toDate(), calendars: [eventStore.defaultCalendarForNewEvents])
-                let events = eventStore.eventsMatchingPredicate(predicate) .filter { (e) in e.title == "tm-event" }
-                callback(events)
+                let events = eventStore.eventsMatchingPredicate(predicate).filter { (e) in e.title == "tm-event" }
+                callback(events.map { (e) -> CalendarEvent in return CalendarEvent(startDate: e.startDate, endDate: e.endDate)})
             }
         })
         

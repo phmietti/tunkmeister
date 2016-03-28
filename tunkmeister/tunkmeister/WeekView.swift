@@ -57,6 +57,10 @@ func ==(lhs: YMD, rhs: YMD) -> Bool {
     return lhs.year == rhs.year && lhs.month == rhs.month && lhs.day == rhs.day
 }
 
+protocol WeekViewDelegate {
+    func dayChanged(ymd: YMD, event: CalendarEvent?)
+}
+
 
 class WeekView: UIView {
 
@@ -65,6 +69,7 @@ class WeekView: UIView {
     let daysInWeek = 7
     var dayTitleLabels = [UILabel]()
     var dayButtons = [UIButton]()
+    var delegate: WeekViewDelegate?
     
     required init?(coder aDecoder: NSCoder) {
         let date = NSDate()
@@ -165,13 +170,17 @@ class WeekView: UIView {
                     (e) in YMD(date: e.startDate) == iterYmd
                 }
                 if (!dayEvents.isEmpty) {
-                    button.layer.borderColor = UIColor.blackColor().CGColor 
+                    button.layer.borderColor = UIColor.blackColor().CGColor
                 } else {
                     button.layer.borderColor = UIColor.whiteColor().CGColor
+                }
+                if (d == self.selection) {
+                    self.delegate?.dayChanged(self.currentDay(), event: dayEvents.first)
                 }
             }
             }
         })
+        
         
     }
 }
