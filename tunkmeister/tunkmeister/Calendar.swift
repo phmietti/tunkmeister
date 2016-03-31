@@ -19,7 +19,6 @@ struct Calendar {
             } else {
                 do {
                     if let event = existingEvent {
-                        print(event)
                         let predicate = eventStore.predicateForEventsWithStartDate(event.startDate, endDate: event.endDate, calendars: nil)
                         try eventStore.eventsMatchingPredicate(predicate).forEach {
                             event in

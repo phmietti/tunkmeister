@@ -43,18 +43,16 @@ class ViewController: UIViewController, WeekViewDelegate {
     let END = 2
     
     @IBAction func startDateEditing(sender: UITextField) {
-        startEditingTime(sender, tag: START, date: startTime, minimumDate: nil, maximumDate: endTime)
+        startEditingTime(sender, tag: START, date: startTime)
     }
     
     @IBAction func endTimeEditing(sender: UITextField) {
-        startEditingTime(sender, tag: END, date: endTime, minimumDate: startTime, maximumDate: nil)
+        startEditingTime(sender, tag: END, date: endTime)
     }
     
-    func startEditingTime(sender: UITextField, tag: Int, date: NSDate?, minimumDate: NSDate?, maximumDate: NSDate?) {
+    func startEditingTime(sender: UITextField, tag: Int, date: NSDate?) {
         let picker = EventTimePicker()
         picker.tag = tag
-        picker.minimumDate = minimumDate
-        picker.maximumDate = maximumDate
         picker.date = date ?? daySelection.currentDay().toDate()
         picker.addTarget(self, action: #selector(eventTimeChanged), forControlEvents: UIControlEvents.ValueChanged)
         sender.inputView = picker
@@ -78,6 +76,18 @@ class ViewController: UIViewController, WeekViewDelegate {
             self.endTime = date
         default:
             print("Lol")
+        }
+        if let startDate = startTime, endDate = endTime {
+            if (startDate.compare(endDate) == NSComparisonResult.OrderedDescending) {
+                if (tag == START) {
+                    endTimeField.text = text
+                    endTime = date
+                } else {
+                    startTimeField.text = text
+                    startTime = date
+                }
+            }
+
         }
     }
     
