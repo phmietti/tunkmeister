@@ -9,13 +9,30 @@
 import UIKit
 import EventKit
 
+class TimePicker: UIDatePicker {
+    override init (frame : CGRect) {
+        super.init(frame: frame)
+        print("init")
+    }
+    
+    required init(coder aDecoder: NSCoder) {
+        fatalError("This class does not support NSCoding")
+    }
+    deinit {
+        print("deinit")
+    }
+}
+
 class ViewController: UIViewController, WeekViewDelegate {
 
+    @IBOutlet weak var monthLabel: UILabel!
     @IBOutlet weak var daySelection: WeekView!
     @IBOutlet weak var startTimeField: UITextField!
     @IBOutlet weak var endTimeField: UITextField!
-    var startTime: NSDate!
-    var endTime: NSDate!
+    @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var clearButton: UIButton!
+    var startTime: NSDate?
+    var endTime: NSDate?
     var event: EKEvent?
     
     @IBAction func skipDay(sender: UIButton) {
@@ -34,23 +51,13 @@ class ViewController: UIViewController, WeekViewDelegate {
     }
     
     func startEditingTime(sender: UITextField, tag: Int, date: NSDate?, minimumDate: NSDate?, maximumDate: NSDate?) {
-        let picker = UIDatePicker()
-        picker.datePickerMode = .Time
-        picker.minuteInterval = 15
+        let picker = EventTimePicker()
         picker.tag = tag
-        if (date != nil) {
-            picker.date = date!
-        }
         picker.minimumDate = minimumDate
         picker.maximumDate = maximumDate
         picker.date = date ?? daySelection.currentDay().toDate()
         picker.addTarget(self, action: #selector(eventTimeChanged), forControlEvents: UIControlEvents.ValueChanged)
-        picker.addTarget(self, action: #selector(closePicker), forControlEvents: .EditingDidEnd)
         sender.inputView = picker
-    }
-    
-    func closePicker(sender: UIDatePicker) {
-        sender.resignFirstResponder()
     }
     
     func eventTimeChanged(sender: UIDatePicker) {
@@ -74,10 +81,17 @@ class ViewController: UIViewController, WeekViewDelegate {
         }
     }
     
+    @IBAction func clearDay(sender: UIButton) {
+        startTimeField.text = ""
+        startTime = nil
+        endTimeField.text = ""
+        endTime = nil
+    }
+    
     @IBAction func saveEvent(sender: UIButton) {
-        Calendar.saveEvent(startTime, endDate: endTime, existingEvent: event, callback: {
+        Calendar.saveEvent(startTime, endDate: endTime, existingEvent: event, callback: { [weak self] in
             dispatch_async(dispatch_get_main_queue()) {
-              self.nextDay()
+              self?.nextDay()
             }
         })
         
@@ -92,6 +106,12 @@ class ViewController: UIViewController, WeekViewDelegate {
             daySelection.addGestureRecognizer(gesture)
         }
         daySelection.delegate = self
+        startTimeField.addTarget(self, action: #selector(timeChange), forControlEvents: .EditingDidEnd)
+        endTimeField.addTarget(self, action: #selector(timeChange), forControlEvents: .EditingDidEnd)
+    }
+    
+    func timeChange(textField: UITextField) {
+        updateButtonStates()
     }
     
     func handleSwipe(sender: UISwipeGestureRecognizer) {
@@ -113,7 +133,6 @@ class ViewController: UIViewController, WeekViewDelegate {
     
     func nextDay() {
         self.daySelection.nextDay()
-        
     }
     
     func dayChanged(ymd: YMD, event: EKEvent?) {
@@ -122,6 +141,21 @@ class ViewController: UIViewController, WeekViewDelegate {
         updateDateText(START, date: startTime)
         endTime = event?.endDate
         updateDateText(END, date: endTime)
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "MMM YYYY"
+        monthLabel.text = dateFormatter.stringFromDate(ymd.toDate())
+        updateButtonStates()
+    }
+    
+    func updateButtonStates() {
+        saveButton.enabled = (startTime != nil && endTime != nil) || (startTime == nil && endTime == nil && event != nil)
+        clearButton.enabled = startTime != nil || endTime != nil
+    }
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        super.touchesBegan(touches, withEvent: event)
+        startTimeField.endEditing(false)
+        endTimeField.endEditing(false)
     }
    
 }
