@@ -23,7 +23,10 @@ class EventTimePicker: UIDatePicker {
     func initConfig() {
         self.datePickerMode = .Time
         self.minuteInterval = 15
+
     }
+
+
 
 
 }

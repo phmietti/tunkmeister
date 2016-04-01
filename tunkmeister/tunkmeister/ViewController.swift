@@ -31,6 +31,8 @@ class ViewController: UIViewController, WeekViewDelegate {
     @IBOutlet weak var endTimeField: UITextField!
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var clearButton: UIButton!
+    @IBOutlet weak var descriptionField: UITextField!
+    
     var startTime: NSDate?
     var endTime: NSDate?
     var event: EKEvent?
@@ -57,13 +59,14 @@ class ViewController: UIViewController, WeekViewDelegate {
         picker.addTarget(self, action: #selector(eventTimeChanged), forControlEvents: UIControlEvents.ValueChanged)
         sender.inputView = picker
     }
-    
+
     func eventTimeChanged(sender: UIDatePicker) {
         let tag = sender.tag
         updateDateText(tag, date: sender.date)
     }
     
     func updateDateText(tag: Int, date: NSDate?) {
+        print(tag, date)
         let dateFormatter = NSDateFormatter()
         dateFormatter.timeStyle = .ShortStyle
         let text = date != nil ? dateFormatter.stringFromDate(date!) : ""
@@ -96,10 +99,11 @@ class ViewController: UIViewController, WeekViewDelegate {
         startTime = nil
         endTimeField.text = ""
         endTime = nil
+        descriptionField.text = ""
     }
     
     @IBAction func saveEvent(sender: UIButton) {
-        Calendar.saveEvent(startTime, endDate: endTime, existingEvent: event, callback: { [weak self] in
+        Calendar.saveEvent(startTime, endDate: endTime, title: descriptionField.text, existingEvent: event, callback: { [weak self] in
             dispatch_async(dispatch_get_main_queue()) {
               self?.nextDay()
             }
@@ -151,6 +155,7 @@ class ViewController: UIViewController, WeekViewDelegate {
         updateDateText(START, date: startTime)
         endTime = event?.endDate
         updateDateText(END, date: endTime)
+        descriptionField.text = event?.title
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "MMM YYYY"
         monthLabel.text = dateFormatter.stringFromDate(ymd.toDate())
@@ -158,7 +163,7 @@ class ViewController: UIViewController, WeekViewDelegate {
     }
     
     func updateButtonStates() {
-        saveButton.enabled = (startTime != nil && endTime != nil) || (startTime == nil && endTime == nil && event != nil)
+        saveButton.enabled = (startTime != nil && endTime != nil && startTime != endTime) || (startTime == nil && endTime == nil && event != nil)
         clearButton.enabled = startTime != nil || endTime != nil
     }
     

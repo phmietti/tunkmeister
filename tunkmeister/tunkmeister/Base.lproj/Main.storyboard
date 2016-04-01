@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="tbB-po-kQM">
-                                <rect key="frame" x="20" y="72" width="560" height="291"/>
+                                <rect key="frame" x="20" y="72" width="560" height="323"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Month" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ydv-VW-ZMm">
                                         <rect key="frame" x="0.0" y="0.0" width="560" height="21"/>
@@ -34,15 +34,15 @@
                                             <constraint firstAttribute="height" constant="72" id="JcX-zc-H7u"/>
                                         </constraints>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TDI-Bx-PwQ">
-                                        <rect key="frame" x="0.0" y="109" width="560" height="30"/>
-                                        <state key="normal" title="Clear"/>
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" placeholderIntrinsicWidth="24" placeholderIntrinsicHeight="24" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TDI-Bx-PwQ">
+                                        <rect key="frame" x="0.0" y="109" width="560" height="24"/>
+                                        <state key="normal" image="clear_black"/>
                                         <connections>
                                             <action selector="clearDay:" destination="BYZ-38-t0r" eventType="touchUpInside" id="l1W-BX-RCo"/>
                                         </connections>
                                     </button>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Start time" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="g2L-Ms-reU">
-                                        <rect key="frame" x="0.0" y="147" width="560" height="30"/>
+                                        <rect key="frame" x="0.0" y="141" width="560" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
@@ -51,22 +51,27 @@
                                         </connections>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="End time" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Q4Q-hy-i0R">
-                                        <rect key="frame" x="0.0" y="185" width="560" height="30"/>
+                                        <rect key="frame" x="0.0" y="179" width="560" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                         <connections>
                                             <action selector="endTimeEditing:" destination="BYZ-38-t0r" eventType="editingDidBegin" id="pWw-cC-cfi"/>
                                         </connections>
                                     </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Description" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Zro-HP-I4I">
+                                        <rect key="frame" x="0.0" y="217" width="560" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
                                     <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cnO-EB-CJn" userLabel="Skip">
-                                        <rect key="frame" x="0.0" y="223" width="560" height="30"/>
+                                        <rect key="frame" x="0.0" y="255" width="560" height="30"/>
                                         <state key="normal" title="Skip"/>
                                         <connections>
                                             <action selector="skipDay:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kQS-0B-DPJ"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PYs-Pu-ix8">
-                                        <rect key="frame" x="0.0" y="261" width="560" height="30"/>
+                                        <rect key="frame" x="0.0" y="293" width="560" height="30"/>
                                         <state key="normal" title="Save"/>
                                         <connections>
                                             <action selector="saveEvent:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vUo-Pe-GgU"/>
@@ -86,6 +91,7 @@
                     <connections>
                         <outlet property="clearButton" destination="TDI-Bx-PwQ" id="J0q-an-6bb"/>
                         <outlet property="daySelection" destination="CBC-uZ-hrH" id="Lem-H7-q56"/>
+                        <outlet property="descriptionField" destination="Zro-HP-I4I" id="gKD-LX-pwf"/>
                         <outlet property="endTimeField" destination="Q4Q-hy-i0R" id="Z3a-PZ-s8x"/>
                         <outlet property="monthLabel" destination="ydv-VW-ZMm" id="JGZ-vZ-pyh"/>
                         <outlet property="saveButton" destination="PYs-Pu-ix8" id="ooW-bi-FQX"/>
@@ -115,4 +121,7 @@
             <point key="canvasLocation" x="351" y="440"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="clear_black" width="24" height="24"/>
+    </resources>
 </document>

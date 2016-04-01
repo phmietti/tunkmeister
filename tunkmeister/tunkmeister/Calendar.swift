@@ -10,7 +10,7 @@ import EventKitUI
 
 struct Calendar {
 
-    static func saveEvent(startDate: NSDate?, endDate: NSDate?, existingEvent: EKEvent?, callback: () -> Void) {
+    static func saveEvent(startDate: NSDate?, endDate: NSDate?, title: String?, existingEvent: EKEvent?, callback: () -> Void) {
         let eventStore = EKEventStore()
         eventStore.requestAccessToEntityType(.Event, completion: {
             (granted, error) in
@@ -20,7 +20,11 @@ struct Calendar {
                 do {
                     if let event = existingEvent {
                         let predicate = eventStore.predicateForEventsWithStartDate(event.startDate, endDate: event.endDate, calendars: nil)
-                        try eventStore.eventsMatchingPredicate(predicate).forEach {
+                        let events = eventStore.eventsMatchingPredicate(predicate)
+                        if (events.count == 0) {
+                            print("did not find any events")
+                        }
+                        try events.forEach {
                             event in
                             try eventStore.removeEvent(event, span: .ThisEvent)
                         }
@@ -30,7 +34,11 @@ struct Calendar {
                         let event = EKEvent(eventStore: eventStore)
                         event.title = "tm-event"
                         event.startDate = startDate
+                        print("adding")
+                        print(startDate)
                         event.endDate = endDate
+                        print(endDate)
+                        event.title = title ?? ""
                         event.calendar = eventStore.defaultCalendarForNewEvents
                         try eventStore.saveEvent(event, span: .ThisEvent)
                         print("event added " + event.eventIdentifier + " " + NSDateFormatter().stringFromDate(event.startDate))
@@ -53,9 +61,7 @@ struct Calendar {
                 print("error")
             } else {
                 let predicate = eventStore.predicateForEventsWithStartDate(start.toDate(), endDate: end.toDate(), calendars: [eventStore.defaultCalendarForNewEvents])
-                let events = eventStore.eventsMatchingPredicate(predicate).filter {
-                    (e) in e.title == "tm-event"
-                }
+                let events = eventStore.eventsMatchingPredicate(predicate)
                 callback(events)
             }
         })

@@ -9,22 +9,22 @@
 import UIKit
 import EventKit
 
-struct YMD : Equatable {
+struct YMD: Equatable {
     let year: Int
     let month: Int
     let day: Int
-    
+
     init(date: NSDate) {
         year = NSCalendar.currentCalendar().components(NSCalendarUnit.Year, fromDate: date).year
         month = NSCalendar.currentCalendar().components(NSCalendarUnit.Month, fromDate: date).month
         day = NSCalendar.currentCalendar().components(NSCalendarUnit.Day, fromDate: date).day
     }
-    
-   
+
+
     func toDate() -> NSDate {
         return toDate(0, minutes: 0)
     }
-    
+
     func toDate(hour: Int, minutes: Int) -> NSDate {
         let c = NSDateComponents()
         c.year = year
@@ -32,26 +32,26 @@ struct YMD : Equatable {
         c.day = day
         c.hour = hour
         c.minute = minutes
-        
+
         return NSCalendar.currentCalendar().dateFromComponents(c)!
     }
-    
+
     func diffDays(diff: Int) -> YMD {
         let date = toDate()
         let newDate = NSCalendar.currentCalendar().dateByAddingUnit(.Day, value: diff, toDate: date, options: NSCalendarOptions(rawValue: 0))!
         return YMD(date: newDate)
     }
-    
+
     func dayOfWeek() -> Int {
         return NSCalendar.currentCalendar().components(NSCalendarUnit.Weekday, fromDate: toDate()).weekday
     }
-    
+
     func dayOfWeekString() -> String {
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "EEE"
         return dateFormatter.stringFromDate(toDate())
     }
-    
+
 }
 
 func ==(lhs: YMD, rhs: YMD) -> Bool {
@@ -71,14 +71,14 @@ class WeekView: UIView {
     var dayTitleLabels = [UILabel]()
     var dayButtons = [UIButton]()
     var delegate: WeekViewDelegate?
-    
+
     required init?(coder aDecoder: NSCoder) {
         let date = NSDate()
         let ymd = YMD(date: date)
         self.selection = ymd.dayOfWeek() - 1
         self.firstDayOfWeek = ymd.diffDays(-self.selection)
         super.init(coder: aDecoder)
-        for d in 0..<daysInWeek {
+        for d in 0 ..< daysInWeek {
             let iterYmd = firstDayOfWeek.diffDays(d)
             let button = UIButton()
             button.backgroundColor = UIColor.clearColor()
@@ -101,7 +101,7 @@ class WeekView: UIView {
             addSubview(label)
         }
     }
-    
+
     override func layoutSubviews() {
         let buttonSize = Int(frame.size.height)
         let frameWidth = Int(frame.size.width)
@@ -120,14 +120,14 @@ class WeekView: UIView {
         }
         updateViewState()
     }
-    
-    
+
+
     func daySelected(button: UIButton) {
         button.selected = true
         selection = dayButtons.indexOf(button)!
         updateViewState()
     }
-    
+
     func nextDay() {
         if (selection == daysInWeek - 1) {
             firstDayOfWeek = firstDayOfWeek.diffDays(daysInWeek)
@@ -137,48 +137,53 @@ class WeekView: UIView {
         }
         updateViewState()
     }
-    
+
     func nextWeek() {
         firstDayOfWeek = firstDayOfWeek.diffDays(daysInWeek)
         updateViewState()
-        UIView.transitionWithView(self, duration: 0.5, options: UIViewAnimationOptions.TransitionFlipFromRight, animations: { () -> Void in }) { (success) -> Void in
+        UIView.transitionWithView(self, duration: 0.5, options: UIViewAnimationOptions.TransitionFlipFromRight, animations: { () -> Void in }) {
+            (success) -> Void in
         }
     }
-    
+
     func previousWeek() {
         firstDayOfWeek = firstDayOfWeek.diffDays(-daysInWeek)
         updateViewState()
-        UIView.transitionWithView(self, duration: 0.5, options: UIViewAnimationOptions.TransitionFlipFromLeft, animations: { () -> Void in }) { (success) -> Void in
+        UIView.transitionWithView(self, duration: 0.5, options: UIViewAnimationOptions.TransitionFlipFromLeft, animations: { () -> Void in }) {
+            (success) -> Void in
         }
     }
-    
+
     func currentDay() -> YMD {
         return firstDayOfWeek.diffDays(selection)
     }
-    
+
     private func updateViewState() {
         for (index, button) in dayButtons.enumerate() {
             button.selected = index == selection
         }
-        Calendar.getEvents(firstDayOfWeek, end: firstDayOfWeek.diffDays(daysInWeek), callback: { events in
+        Calendar.getEvents(firstDayOfWeek, end: firstDayOfWeek.diffDays(daysInWeek), callback: {
+            [weak self] events in
             dispatch_async(dispatch_get_main_queue()) {
-            for d in 0..<self.daysInWeek {
-                let iterYmd = self.firstDayOfWeek.diffDays(d)
-                let title = String(iterYmd.day)
-                let button = self.dayButtons[d]
-                button.setTitle(title, forState: .Normal)
-                let dayEvents = events.filter {
-                    (e) in YMD(date: e.startDate) == iterYmd
+                if let daysInWeek  = self?.daysInWeek, firstDayOfWeek = self?.firstDayOfWeek, currentDay = self?.currentDay() {
+                    for d in 0 ..< daysInWeek {
+                        let iterYmd = firstDayOfWeek.diffDays(d)
+                        let title = String(iterYmd.day)
+                        let button = self?.dayButtons[d]
+                        button?.setTitle(title, forState: .Normal)
+                        let dayEvents = events.filter {
+                            (e) in YMD(date: e.startDate) == iterYmd
+                        }
+                        button?.layer.borderColor = dayEvents.isEmpty ? UIColor.whiteColor().CGColor : UIColor.blackColor().CGColor
+                        if (d == self?.selection) {
+                            self?.delegate?.dayChanged(currentDay, event: dayEvents.first)
+                        }
+                    }
                 }
-                button.layer.borderColor = dayEvents.isEmpty ? UIColor.whiteColor().CGColor : UIColor.blackColor().CGColor
-                if (d == self.selection) {
-                    self.delegate?.dayChanged(self.currentDay(), event: dayEvents.first)
-                }
-            }
             }
         })
-        
-        
+
+
     }
 }
 
