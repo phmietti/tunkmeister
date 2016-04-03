@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -18,31 +19,60 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="tbB-po-kQM">
-                                <rect key="frame" x="20" y="72" width="560" height="323"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="tbB-po-kQM">
+                                <rect key="frame" x="20" y="72" width="560" height="285"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Month" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ydv-VW-ZMm">
-                                        <rect key="frame" x="0.0" y="0.0" width="560" height="21"/>
+                                        <rect key="frame" x="256" y="0.0" width="50" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="21" id="9Ez-e7-jz6"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CBC-uZ-hrH" customClass="WeekView" customModule="tunkmeister" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="29" width="560" height="72"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CBC-uZ-hrH" customClass="WeekView" customModule="tunkmeister" customModuleProvider="target">
+                                        <rect key="frame" x="8" y="29" width="544" height="72"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="72" id="JcX-zc-H7u"/>
                                         </constraints>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" placeholderIntrinsicWidth="24" placeholderIntrinsicHeight="24" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TDI-Bx-PwQ">
-                                        <rect key="frame" x="0.0" y="109" width="560" height="24"/>
-                                        <state key="normal" image="clear_black"/>
-                                        <connections>
-                                            <action selector="clearDay:" destination="BYZ-38-t0r" eventType="touchUpInside" id="l1W-BX-RCo"/>
-                                        </connections>
-                                    </button>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Start time" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="g2L-Ms-reU">
-                                        <rect key="frame" x="0.0" y="141" width="560" height="30"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="gk5-zB-wYr">
+                                        <rect key="frame" x="8" y="109" width="544" height="24"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TDI-Bx-PwQ">
+                                                <rect key="frame" x="0.0" y="0.0" width="544" height="24"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="24" id="JqW-4a-Otp"/>
+                                                    <constraint firstAttribute="height" constant="24" id="Mmh-5l-tmW"/>
+                                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="24" id="RDj-HK-dkp"/>
+                                                    <constraint firstAttribute="width" constant="24" id="aoZ-EZ-lzk"/>
+                                                    <constraint firstAttribute="width" secondItem="TDI-Bx-PwQ" secondAttribute="height" multiplier="1:1" id="cA8-w6-VCb"/>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="24" id="dNr-ld-JTW"/>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="24" id="y8Z-KE-Nzq"/>
+                                                </constraints>
+                                                <inset key="imageEdgeInsets" minX="1" minY="1" maxX="1" maxY="1"/>
+                                                <state key="normal" image="clear_black"/>
+                                                <variation key="default">
+                                                    <mask key="constraints">
+                                                        <exclude reference="JqW-4a-Otp"/>
+                                                        <exclude reference="Mmh-5l-tmW"/>
+                                                        <exclude reference="RDj-HK-dkp"/>
+                                                        <exclude reference="aoZ-EZ-lzk"/>
+                                                        <exclude reference="cA8-w6-VCb"/>
+                                                        <exclude reference="dNr-ld-JTW"/>
+                                                        <exclude reference="y8Z-KE-Nzq"/>
+                                                    </mask>
+                                                </variation>
+                                                <connections>
+                                                    <action selector="clearDay:" destination="BYZ-38-t0r" eventType="touchUpInside" id="l1W-BX-RCo"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Start time" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="g2L-Ms-reU">
+                                        <rect key="frame" x="238" y="141" width="85" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
@@ -50,34 +80,47 @@
                                             <action selector="startDateEditing:" destination="BYZ-38-t0r" eventType="editingDidBegin" id="dp2-r8-e8U"/>
                                         </connections>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="End time" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Q4Q-hy-i0R">
-                                        <rect key="frame" x="0.0" y="179" width="560" height="30"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="End time" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Q4Q-hy-i0R">
+                                        <rect key="frame" x="241" y="179" width="78" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                         <connections>
                                             <action selector="endTimeEditing:" destination="BYZ-38-t0r" eventType="editingDidBegin" id="pWw-cC-cfi"/>
                                         </connections>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Description" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Zro-HP-I4I">
-                                        <rect key="frame" x="0.0" y="217" width="560" height="30"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Description" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Zro-HP-I4I">
+                                        <rect key="frame" x="16" y="217" width="528" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cnO-EB-CJn" userLabel="Skip">
-                                        <rect key="frame" x="0.0" y="255" width="560" height="30"/>
-                                        <state key="normal" title="Skip"/>
-                                        <connections>
-                                            <action selector="skipDay:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kQS-0B-DPJ"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PYs-Pu-ix8">
-                                        <rect key="frame" x="0.0" y="293" width="560" height="30"/>
-                                        <state key="normal" title="Save"/>
-                                        <connections>
-                                            <action selector="saveEvent:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vUo-Pe-GgU"/>
-                                        </connections>
-                                    </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" distribution="fillEqually" alignment="firstBaseline" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="MXk-rI-3cw">
+                                        <rect key="frame" x="238" y="255" width="84" height="30"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cnO-EB-CJn" userLabel="Skip">
+                                                <rect key="frame" x="0.0" y="0.0" width="34" height="30"/>
+                                                <state key="normal" title="Skip"/>
+                                                <connections>
+                                                    <action selector="skipDay:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kQS-0B-DPJ"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PYs-Pu-ix8">
+                                                <rect key="frame" x="50" y="0.0" width="34" height="30"/>
+                                                <state key="normal" title="Save"/>
+                                                <connections>
+                                                    <action selector="saveEvent:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vUo-Pe-GgU"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="CBC-uZ-hrH" firstAttribute="leading" secondItem="tbB-po-kQM" secondAttribute="leading" constant="8" id="1kq-1t-pD1"/>
+                                    <constraint firstAttribute="trailing" secondItem="CBC-uZ-hrH" secondAttribute="trailing" constant="8" id="8fx-oV-0dY"/>
+                                    <constraint firstItem="gk5-zB-wYr" firstAttribute="leading" secondItem="tbB-po-kQM" secondAttribute="leading" constant="8" id="GcL-1b-0a7"/>
+                                    <constraint firstItem="Zro-HP-I4I" firstAttribute="leading" secondItem="tbB-po-kQM" secondAttribute="leading" constant="16" id="IZ5-Zq-gkY"/>
+                                    <constraint firstAttribute="trailing" secondItem="Zro-HP-I4I" secondAttribute="trailing" constant="16" id="OZr-M8-La0"/>
+                                    <constraint firstAttribute="trailing" secondItem="gk5-zB-wYr" secondAttribute="trailing" constant="8" id="xc5-po-QBr"/>
+                                </constraints>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>

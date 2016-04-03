@@ -59,7 +59,7 @@ func ==(lhs: YMD, rhs: YMD) -> Bool {
 }
 
 protocol WeekViewDelegate {
-    func dayChanged(ymd: YMD, event: EKEvent?)
+    func dayChanged(ymd: YMD, event: CalendarEvent?)
 }
 
 

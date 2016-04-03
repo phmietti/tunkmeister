@@ -9,11 +9,15 @@
 import Foundation
 
 extension NSDate {
+    func year() -> Int {
+        return NSCalendar.currentCalendar().component(.Year, fromDate: self)
+    }
+
     func hour() -> Int {
-        return NSCalendar.currentCalendar().components(.Hour, fromDate: self).hour
+        return NSCalendar.currentCalendar().component(.Hour, fromDate: self)
     }
     
     func minutes() -> Int {
-        return NSCalendar.currentCalendar().components(.Minute, fromDate: self).minute
+        return NSCalendar.currentCalendar().component(.Minute, fromDate: self)
     }
 }
