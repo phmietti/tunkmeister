@@ -87,9 +87,9 @@ class WeekView: UIView {
             button.addTarget(self, action: #selector(daySelected), forControlEvents: .TouchUpInside)
             let title = String(iterYmd.day)
             button.setTitle(title, forState: .Normal)
-            button.setTitleColor(UIColor.blackColor(), forState: .Normal)
-            button.setTitleColor(UIColor.redColor(), forState: .Selected)
-            button.setTitleColor(UIColor.redColor(), forState: [.Selected, .Highlighted])
+            button.setTitleColor(UIColor.grayColor(), forState: .Normal)
+            button.setTitleColor(UIColor.blackColor(), forState: .Selected)
+            button.setTitleColor(UIColor.blackColor(), forState: [.Selected, .Highlighted])
             let label = UILabel()
             label.backgroundColor = UIColor.clearColor()
             label.text = iterYmd.dayOfWeekString()
@@ -154,6 +154,7 @@ class WeekView: UIView {
     private func updateViewState() {
         for (index, button) in dayButtons.enumerate() {
             button.selected = index == selection
+            dayTitleLabels[index].textColor = button.currentTitleColor
         }
         Calendar.getEvents(firstDayOfWeek, end: firstDayOfWeek.diffDays(daysInWeek), callback: {
             [weak self] events in
