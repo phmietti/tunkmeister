@@ -141,17 +141,11 @@ class WeekView: UIView {
     func nextWeek() {
         firstDayOfWeek = firstDayOfWeek.diffDays(daysInWeek)
         updateViewState()
-        UIView.transitionWithView(self, duration: 0.5, options: UIViewAnimationOptions.TransitionFlipFromRight, animations: { () -> Void in }) {
-            (success) -> Void in
-        }
     }
 
     func previousWeek() {
         firstDayOfWeek = firstDayOfWeek.diffDays(-daysInWeek)
         updateViewState()
-        UIView.transitionWithView(self, duration: 0.5, options: UIViewAnimationOptions.TransitionFlipFromLeft, animations: { () -> Void in }) {
-            (success) -> Void in
-        }
     }
 
     func currentDay() -> YMD {
