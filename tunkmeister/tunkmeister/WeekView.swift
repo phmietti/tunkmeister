@@ -20,7 +20,6 @@ struct YMD: Equatable {
         day = NSCalendar.currentCalendar().components(NSCalendarUnit.Day, fromDate: date).day
     }
 
-
     func toDate() -> NSDate {
         return toDate(0, minutes: 0)
     }
@@ -106,13 +105,13 @@ class WeekView: UIView {
         let buttonSize = Int(frame.size.height)
         let frameWidth = Int(frame.size.width)
         let buttonWidth = frameWidth / daysInWeek
-        var buttonFrame = CGRect(x: 0, y: 10, width: buttonWidth, height: buttonSize - 15)
+        var buttonFrame = CGRect(x: 0, y: 20, width: buttonWidth, height: buttonSize - 20)
         for (index, button) in dayButtons.enumerate() {
             let x = CGFloat(index * (buttonWidth + 1))
             buttonFrame.origin.x = x
             button.frame = buttonFrame
         }
-        var labelFrame = CGRect(x: 0, y: 0, width: buttonWidth, height: 10)
+        var labelFrame = CGRect(x: 0, y: 0, width: buttonWidth, height: 20)
         for (index, label) in dayTitleLabels.enumerate() {
             let x = CGFloat(index * (buttonWidth + 1))
             labelFrame.origin.x = x
