@@ -10,7 +10,7 @@ import UIKit
 import EventKit
 
 class TimePicker: UIDatePicker {
-    override init (frame : CGRect) {
+    override init(frame: CGRect) {
         super.init(frame: frame)
         print("init")
     }
@@ -23,7 +23,30 @@ class TimePicker: UIDatePicker {
     }
 }
 
-class ViewController: UIViewController, WeekViewDelegate {
+
+
+class FavoriteEventCell: UICollectionViewCell {
+    let label = UILabel()
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        label.text = "lolol"
+        contentView.addSubview(label)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        label.frame = contentView.bounds
+    }
+
+
+}
+
+class ViewController: UIViewController, WeekViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate {
 
     @IBOutlet weak var monthLabel: UILabel!
     @IBOutlet weak var daySelection: WeekView!
@@ -32,6 +55,7 @@ class ViewController: UIViewController, WeekViewDelegate {
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var clearButton: UIButton!
     @IBOutlet weak var descriptionField: UITextField!
+    @IBOutlet weak var favoritesView: UICollectionView!
 
     var startTime: NSDate?
     var endTime: NSDate?
@@ -66,7 +90,6 @@ class ViewController: UIViewController, WeekViewDelegate {
     }
 
     func updateDateText(tag: Int, date: NSDate?) {
-        print(tag, date)
         let dateFormatter = NSDateFormatter()
         dateFormatter.timeStyle = .ShortStyle
         let text = date != nil ? dateFormatter.stringFromDate(date!) : ""
@@ -94,6 +117,27 @@ class ViewController: UIViewController, WeekViewDelegate {
         }
     }
 
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        print("lol!!")
+        return 3
+    }
+
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        print("number")
+        return 1
+    }
+
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("favoriteEvent", forIndexPath: indexPath) as! FavoriteEventCell
+        print("heh heh")
+        return cell
+    }
+
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        print("selected \(indexPath)")
+    }
+
+
     @IBAction func clearDay(sender: UIButton) {
         startTimeField.text = ""
         startTime = nil
@@ -103,12 +147,12 @@ class ViewController: UIViewController, WeekViewDelegate {
     }
 
     @IBAction func saveEvent(sender: UIButton) {
-        Calendar.persistDay(startTime, endDate: endTime, title: descriptionField.text, existingEvent: event, callback: { [weak self] in
+        Calendar.persistDay(startTime, endDate: endTime, title: descriptionField.text, existingEvent: event, callback: {
+            [weak self] in
             dispatch_async(dispatch_get_main_queue()) {
-              self?.nextDay()
+                self?.nextDay()
             }
         })
-
     }
 
     override func viewDidLoad() {
@@ -120,6 +164,9 @@ class ViewController: UIViewController, WeekViewDelegate {
             daySelection.addGestureRecognizer(gesture)
         }
         daySelection.delegate = self
+        favoritesView.delegate = self
+        favoritesView.dataSource = self
+        favoritesView.registerClass(FavoriteEventCell.self, forCellWithReuseIdentifier: "favoriteEvent")
         startTimeField.addTarget(self, action: #selector(timeChange), forControlEvents: .EditingDidEnd)
         endTimeField.addTarget(self, action: #selector(timeChange), forControlEvents: .EditingDidEnd)
     }
@@ -134,7 +181,7 @@ class ViewController: UIViewController, WeekViewDelegate {
             daySelection.nextWeek()
         case UISwipeGestureRecognizerDirection.Right:
             daySelection.previousWeek()
-        default :
+        default:
             print("voe lol")
         }
         print(sender.direction)
