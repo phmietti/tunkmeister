@@ -77,16 +77,46 @@ class ViewController: UIViewController, WeekViewDelegate, UICollectionViewDataSo
     }
 
     func startEditingTime(sender: UITextField, tag: Int, date: NSDate?) {
-        let picker = EventTimePicker()
+        let inputView = UIView(frame: CGRectMake(0, 0, self.view.frame.width, 240))
+        
+        let picker  : UIDatePicker = UIDatePicker(frame: CGRectMake(0, 0, 0, 0))
+        picker.datePickerMode = .Time
+        picker.minuteInterval = 15
         picker.tag = tag
         picker.date = date ?? daySelection.currentDay().toDate()
+        
         picker.addTarget(self, action: #selector(eventTimeChanged), forControlEvents: UIControlEvents.ValueChanged)
-        sender.inputView = picker
+  
+        inputView.addSubview(picker)
+        let doneButton = UIButton(frame: CGRectMake((self.view.frame.size.width/2) - (100/2), 0, 100, 50))
+        doneButton.setTitle("Done", forState: UIControlState.Normal)
+        doneButton.setTitle("Done", forState: UIControlState.Highlighted)
+        doneButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+        doneButton.setTitleColor(UIColor.grayColor(), forState: UIControlState.Highlighted)
+        doneButton.frame = CGRectMake(250.0, 10.0, 70.0, 37.0)
+        if (tag == START) {
+        doneButton.addTarget(self, action: #selector(startTimeDone), forControlEvents: UIControlEvents.TouchUpInside) // set button click event
+        } else {
+            doneButton.addTarget(self, action: #selector(endTimeDone), forControlEvents: UIControlEvents.TouchUpInside) // set button click event
+        }
+
+        inputView.addSubview(doneButton) // add Button to UIView
+        
+        sender.inputView = inputView
     }
 
     func eventTimeChanged(sender: UIDatePicker) {
         let tag = sender.tag
         updateDateText(tag, date: sender.date)
+    }
+    
+    func startTimeDone(sender:UIButton)
+    {
+        startTimeField.resignFirstResponder() // To resign the inputView on clicking done.
+    }
+    
+    func endTimeDone(sender: UIButton) {
+        endTimeField.resignFirstResponder()
     }
 
     func updateDateText(tag: Int, date: NSDate?) {
