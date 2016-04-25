@@ -11,7 +11,7 @@ import EventKitUI
 struct CalendarEvent {
     let startDate: NSDate
     let endDate: NSDate
-    let identifier: String
+    let identifier: String?
     let title: String
 
     func startYmd() -> YMD {
@@ -49,10 +49,10 @@ struct Calendar {
                 do {
                     if let event = existingEvent {
                         print(event.identifier)
-                        if let eventToBeRemoved = eventStore.eventWithIdentifier(event.identifier) {
+                        if let eventIdentifier = event.identifier, eventToBeRemoved = eventStore.eventWithIdentifier(event.identifier!) {
                             print("deleting event")
                             try eventStore.removeEvent(eventToBeRemoved, span: .ThisEvent)
-                            CalendarStore.removeEventId(event.identifier)
+                            CalendarStore.removeEventId(eventIdentifier)
                         }
                     }
                     if let startDate = startDate, endDate = endDate {
