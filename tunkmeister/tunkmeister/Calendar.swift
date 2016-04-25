@@ -40,6 +40,7 @@ struct CalendarStore {
 struct Calendar {
 
     static func persistDay(startDate: NSDate?, endDate: NSDate?, title: String?, existingEvent: CalendarEvent?, callback: () -> Void) {
+        print("storing \(startDate) \(endDate)")
         let eventStore = EKEventStore()
         eventStore.requestAccessToEntityType(.Event, completion: {
             (granted, error) in
@@ -90,11 +91,7 @@ struct Calendar {
                         return CalendarStore.storedEvents.contains($0.eventIdentifier)
                     }
                 }
-
-                events.forEach {
-                    e in print(e.eventIdentifier)
-                }
-                callback(events.map {
+                 callback(events.map {
                     e in CalendarEvent(startDate: e.startDate, endDate: e.endDate, identifier: e.eventIdentifier, title: e.title)
                 })
             }
