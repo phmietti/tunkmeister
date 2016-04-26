@@ -63,8 +63,12 @@ struct FavoriteEvent {
         return dictionary
     }
 
-    func matches(startDate: NSDate, endDate: NSDate) -> Bool {
-        return startDate.hour() == startHour && startDate.minutes() == startMinutes && endDate.hour() == endHour && endDate.minutes() == endMinutes
+    func matches(startDateMaybe: NSDate?, endDateMaybe: NSDate?) -> Bool {
+        if let startDate = startDateMaybe, endDate = endDateMaybe {
+            return startDate.hour() == startHour && startDate.minutes() == startMinutes && endDate.hour() == endHour && endDate.minutes() == endMinutes
+        } else {
+            return false
+        }
     }
 
     // Decode
@@ -123,18 +127,16 @@ class ViewController: UIViewController, WeekViewDelegate, UICollectionViewDataSo
                 print("removing \(i) \(self.favorites.count)")
                 self.favorites.removeAtIndex(i)
                 if let paths = self.favoritesView.indexPathsForSelectedItems() {
+                    print("removing paths \(paths)")
                     self.favoritesView.deleteItemsAtIndexPaths(paths)
                 }
             }
         } else if let s = startTime, e = endTime {
             self.favorites.append(FavoriteEvent(startHour: s.hour(), startMinutes: s.minutes(), endHour: e.hour(), endMinutes: e.minutes(), title: descriptionField.text))
-            self.favoritesView.selectItemAtIndexPath(NSIndexPath(index: favorites.count - 1), animated: false, scrollPosition: .None)
+            self.favoritesView.reloadData()
+            self.favoritesView.selectItemAtIndexPath(NSIndexPath(forRow: self.favorites.count - 1, inSection: 0), animated: false, scrollPosition: .None)
         }
-        dispatch_async(dispatch_get_main_queue(), {
-            [weak self] in
-            self?.favoritesView.reloadData()
-            self?.updateButtonStates()
-        });
+        self.updateButtonStates()
         NSUserDefaults.standardUserDefaults().setObject(favorites.map {
             f -> NSDictionary in f.encode()
         }, forKey: "favorites")
@@ -225,21 +227,28 @@ class ViewController: UIViewController, WeekViewDelegate, UICollectionViewDataSo
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         print("indexPath \(indexPath.row)")
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("favoriteEvent", forIndexPath: indexPath) as! FavoriteEventCell
-        let favorite = favorites[indexPath.row]
-        let title = favorite.title ?? ""
-        cell.label.text = "\(favorite.startHour):\(favorite.startMinutes) - \(favorite.endHour):\(favorite.endMinutes)\n\(title)"
+        let f = favorites[indexPath.row]
+        let title = f.title ?? ""
+        let formatter = NSNumberFormatter()
+        formatter.minimumIntegerDigits = 2
+        cell.label.text = String(format: "%02d:%02d-%02d:%02d", f.startHour, f.startMinutes, f.endHour, f.endMinutes) + " " + title
         cell.label.sizeToFit()
+        cell.selected = f.matches(startTime, endDateMaybe: endTime)
         cell.label.textColor = cell.selected ? UIColor.blackColor() : UIColor.grayColor()
         return cell
     }
 
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSizeMake(70, 50)
+        return CGSizeMake(200, 20)
     }
 
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        selectedFavorite(collectionView, indexPath: indexPath)
+    }
+
+    func selectedFavorite(collectionView: UICollectionView?, indexPath: NSIndexPath) {
         print("selected \(indexPath)")
-        (collectionView.cellForItemAtIndexPath(indexPath) as! FavoriteEventCell).label.textColor = UIColor.blackColor()
+        (collectionView?.cellForItemAtIndexPath(indexPath) as? FavoriteEventCell)?.label.textColor = UIColor.blackColor()
         let favorite = favorites[indexPath.row]
         let startTime = daySelection.currentDay().toDate(favorite.startHour, minutes: favorite.startMinutes)
         let endTime = daySelection.currentDay().toDate(favorite.endHour, minutes: favorite.endMinutes)
@@ -252,13 +261,14 @@ class ViewController: UIViewController, WeekViewDelegate, UICollectionViewDataSo
         print("deselect \(indexPath)")
     }
 
-
     @IBAction func clearDay(sender: UIButton) {
         startTimeField.text = ""
         startTime = nil
         endTimeField.text = ""
         endTime = nil
         descriptionField.text = ""
+        updateButtonStates()
+        favoritesView.reloadData()
     }
 
     @IBAction func saveEvent(sender: UIButton) {
@@ -318,17 +328,15 @@ class ViewController: UIViewController, WeekViewDelegate, UICollectionViewDataSo
         self.event = event
         monthLabel.text = monthFormatter.stringFromDate(ymd.toDate())
         updateValues(event?.startDate, end: event?.endDate, title: event?.title)
+        favoritesView.reloadData()
         if let index = findSelectedFavoriteIndex() {
             print("favorite found \(index)")
-            dispatch_async(dispatch_get_main_queue(), {
-                [weak self] in
-                self?.favoritesView.selectItemAtIndexPath(NSIndexPath(index: index), animated: false, scrollPosition: .None)
-                self?.favoritesView.cellForItemAtIndexPath(NSIndexPath(index: index))?.selected = true
-            });
+            self.favoritesView.reloadData()
+            self.favoritesView.selectItemAtIndexPath(NSIndexPath(forRow: index, inSection: 0), animated: false, scrollPosition: .None)
+
         } else {
             print("favorite not found")
         }
-        favoritesView.reloadData()
         updateButtonStates()
     }
 
@@ -361,13 +369,10 @@ class ViewController: UIViewController, WeekViewDelegate, UICollectionViewDataSo
     }
 
     func findSelectedFavoriteIndex() -> Int? {
-        if let start = startTime, end = endTime {
-            return favorites.indexOf {
-                $0.matches(start, endDate: end)
-            }
-        } else {
-            return nil
+        return favorites.indexOf {
+            $0.matches(startTime, endDateMaybe: endTime)
         }
+
     }
 
 }

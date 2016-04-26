@@ -20,7 +20,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="tbB-po-kQM">
-                                <rect key="frame" x="20" y="72" width="560" height="383"/>
+                                <rect key="frame" x="20" y="72" width="560" height="351"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Month" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ydv-VW-ZMm">
                                         <rect key="frame" x="256" y="0.0" width="50" height="21"/>
@@ -39,10 +39,13 @@
                                         </constraints>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gk5-zB-wYr">
-                                        <rect key="frame" x="8" y="109" width="544" height="24"/>
+                                        <rect key="frame" x="8" y="109" width="544" height="30"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ILv-ge-NvF">
-                                                <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ILv-ge-NvF">
+                                                <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="30" id="fhO-4F-i9h"/>
+                                                </constraints>
                                                 <state key="normal" image="ic_favorite_border">
                                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
@@ -50,16 +53,21 @@
                                                     <action selector="clickFavorite:" destination="BYZ-38-t0r" eventType="touchUpInside" id="dKy-Hs-UMc"/>
                                                 </connections>
                                             </button>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="center" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Start time" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="g2L-Ms-reU">
+                                                <rect key="frame" x="30" y="0.0" width="490" height="30"/>
+                                                <nil key="textColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                                <connections>
+                                                    <action selector="startDateEditing:" destination="BYZ-38-t0r" eventType="editingDidBegin" id="dp2-r8-e8U"/>
+                                                </connections>
+                                            </textField>
                                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TDI-Bx-PwQ">
-                                                <rect key="frame" x="24" y="0.0" width="520" height="24"/>
+                                                <rect key="frame" x="520" y="0.0" width="24" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="24" id="JqW-4a-Otp"/>
                                                     <constraint firstAttribute="height" constant="24" id="Mmh-5l-tmW"/>
-                                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="24" id="RDj-HK-dkp"/>
-                                                    <constraint firstAttribute="width" constant="24" id="aoZ-EZ-lzk"/>
                                                     <constraint firstAttribute="width" secondItem="TDI-Bx-PwQ" secondAttribute="height" multiplier="1:1" id="cA8-w6-VCb"/>
-                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="24" id="dNr-ld-JTW"/>
-                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="24" id="y8Z-KE-Nzq"/>
                                                 </constraints>
                                                 <inset key="imageEdgeInsets" minX="1" minY="1" maxX="1" maxY="1"/>
                                                 <state key="normal" image="clear_black"/>
@@ -67,11 +75,7 @@
                                                     <mask key="constraints">
                                                         <exclude reference="JqW-4a-Otp"/>
                                                         <exclude reference="Mmh-5l-tmW"/>
-                                                        <exclude reference="RDj-HK-dkp"/>
-                                                        <exclude reference="aoZ-EZ-lzk"/>
                                                         <exclude reference="cA8-w6-VCb"/>
-                                                        <exclude reference="dNr-ld-JTW"/>
-                                                        <exclude reference="y8Z-KE-Nzq"/>
                                                     </mask>
                                                 </variation>
                                                 <connections>
@@ -79,18 +83,29 @@
                                                 </connections>
                                             </button>
                                         </subviews>
+                                        <constraints>
+                                            <constraint firstItem="TDI-Bx-PwQ" firstAttribute="leading" secondItem="g2L-Ms-reU" secondAttribute="trailing" constant="100" id="9Aj-ir-NnC"/>
+                                            <constraint firstItem="g2L-Ms-reU" firstAttribute="leading" secondItem="ILv-ge-NvF" secondAttribute="trailing" constant="100" id="CV2-8i-aEI"/>
+                                            <constraint firstItem="g2L-Ms-reU" firstAttribute="leading" secondItem="ILv-ge-NvF" secondAttribute="trailing" constant="100" id="FLF-fT-hVc"/>
+                                            <constraint firstItem="TDI-Bx-PwQ" firstAttribute="leading" secondItem="g2L-Ms-reU" secondAttribute="trailing" id="Que-RU-grX"/>
+                                            <constraint firstItem="TDI-Bx-PwQ" firstAttribute="leading" secondItem="g2L-Ms-reU" secondAttribute="trailing" constant="100" id="RgD-z4-IRk"/>
+                                            <constraint firstItem="g2L-Ms-reU" firstAttribute="leading" secondItem="ILv-ge-NvF" secondAttribute="trailing" id="qZc-oA-COh"/>
+                                            <constraint firstItem="g2L-Ms-reU" firstAttribute="leading" secondItem="ILv-ge-NvF" secondAttribute="trailing" constant="8" symbolic="YES" id="svt-ok-EW8"/>
+                                            <constraint firstItem="TDI-Bx-PwQ" firstAttribute="leading" secondItem="g2L-Ms-reU" secondAttribute="trailing" constant="8" symbolic="YES" id="zTq-ah-l3E"/>
+                                        </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="CV2-8i-aEI"/>
+                                                <exclude reference="FLF-fT-hVc"/>
+                                                <exclude reference="svt-ok-EW8"/>
+                                                <exclude reference="9Aj-ir-NnC"/>
+                                                <exclude reference="RgD-z4-IRk"/>
+                                                <exclude reference="zTq-ah-l3E"/>
+                                            </mask>
+                                        </variation>
                                     </stackView>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Start time" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="g2L-Ms-reU">
-                                        <rect key="frame" x="238" y="141" width="85" height="30"/>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                        <connections>
-                                            <action selector="startDateEditing:" destination="BYZ-38-t0r" eventType="editingDidBegin" id="dp2-r8-e8U"/>
-                                        </connections>
-                                    </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="End time" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Q4Q-hy-i0R">
-                                        <rect key="frame" x="241" y="179" width="78" height="30"/>
+                                        <rect key="frame" x="30" y="147" width="500" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                         <connections>
@@ -98,12 +113,12 @@
                                         </connections>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Description" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Zro-HP-I4I">
-                                        <rect key="frame" x="16" y="217" width="528" height="30"/>
+                                        <rect key="frame" x="16" y="185" width="528" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="cX6-wt-Xj0">
-                                        <rect key="frame" x="16" y="255" width="528" height="128"/>
+                                        <rect key="frame" x="16" y="223" width="528" height="128"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="128" id="YTg-Ae-mvt"/>
@@ -124,12 +139,24 @@
                                     <constraint firstItem="Zro-HP-I4I" firstAttribute="leading" secondItem="tbB-po-kQM" secondAttribute="leading" constant="16" id="IZ5-Zq-gkY"/>
                                     <constraint firstItem="cX6-wt-Xj0" firstAttribute="leading" secondItem="tbB-po-kQM" secondAttribute="leading" constant="16" id="JPJ-D7-SoR"/>
                                     <constraint firstAttribute="trailing" secondItem="Zro-HP-I4I" secondAttribute="trailing" constant="16" id="OZr-M8-La0"/>
+                                    <constraint firstItem="Q4Q-hy-i0R" firstAttribute="leading" secondItem="tbB-po-kQM" secondAttribute="leading" constant="30" id="Tnk-V3-DfS"/>
                                     <constraint firstAttribute="trailing" secondItem="cX6-wt-Xj0" secondAttribute="trailing" constant="16" id="W15-Ce-tnQ"/>
+                                    <constraint firstItem="Q4Q-hy-i0R" firstAttribute="leading" secondItem="tbB-po-kQM" secondAttribute="leading" constant="30" id="eLa-Bn-BNb"/>
+                                    <constraint firstItem="Q4Q-hy-i0R" firstAttribute="leading" secondItem="tbB-po-kQM" secondAttribute="leading" constant="8" id="hFj-if-XWt"/>
+                                    <constraint firstAttribute="trailing" secondItem="Q4Q-hy-i0R" secondAttribute="trailing" constant="30" id="ko8-vV-TYD"/>
+                                    <constraint firstAttribute="trailing" secondItem="Q4Q-hy-i0R" secondAttribute="trailing" constant="30" id="oaI-FN-gQk"/>
                                     <constraint firstAttribute="trailing" secondItem="gk5-zB-wYr" secondAttribute="trailing" constant="8" id="xc5-po-QBr"/>
+                                    <constraint firstAttribute="trailing" secondItem="Q4Q-hy-i0R" secondAttribute="trailing" constant="8" id="zv3-kA-j46"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="hFj-if-XWt"/>
+                                        <exclude reference="zv3-kA-j46"/>
+                                    </mask>
+                                </variation>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" distribution="fillEqually" alignment="firstBaseline" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="MXk-rI-3cw">
-                                <rect key="frame" x="28" y="550" width="544" height="30"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="firstBaseline" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="MXk-rI-3cw">
+                                <rect key="frame" x="28" y="431" width="544" height="30"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cnO-EB-CJn" userLabel="Skip">
                                         <rect key="frame" x="0.0" y="0.0" width="264" height="30"/>
