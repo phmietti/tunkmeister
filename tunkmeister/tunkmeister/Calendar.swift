@@ -19,25 +19,9 @@ struct CalendarEvent {
     }
 }
 
-struct CalendarStore {
-    static var storedEvents: [String] = NSUserDefaults.standardUserDefaults().arrayForKey("events") as? [String] ?? []
-
-    static func removeEventId(eventId: String) {
-        storedEvents = storedEvents.filter { $0 != eventId}
-        print("removed \(storedEvents.count)")
-        NSUserDefaults.standardUserDefaults().setObject(storedEvents, forKey: "events")
-
-    }
-
-    static func saveEventId(eventId: String) {
-        storedEvents.append(eventId)
-        print("saved \(storedEvents.count)")
-        NSUserDefaults.standardUserDefaults().setObject(storedEvents, forKey: "events")
-    }
-
-}
-
 struct Calendar {
+
+    static let identifier = "\u{2063}"
 
     static func persistDay(startDate: NSDate?, endDate: NSDate?, title: String?, existingEvent: CalendarEvent?, callback: () -> Void) {
         print("storing \(startDate) \(endDate)")
@@ -50,10 +34,9 @@ struct Calendar {
                 do {
                     if let event = existingEvent {
                         print(event.identifier)
-                        if let eventIdentifier = event.identifier, eventToBeRemoved = eventStore.eventWithIdentifier(event.identifier!) {
+                        if let eventToBeRemoved = eventStore.eventWithIdentifier(event.identifier!) {
                             print("deleting event")
                             try eventStore.removeEvent(eventToBeRemoved, span: .ThisEvent)
-                            CalendarStore.removeEventId(eventIdentifier)
                         }
                     }
                     if let startDate = startDate, endDate = endDate {
@@ -61,10 +44,9 @@ struct Calendar {
                         event.title = "tm-event"
                         event.startDate = startDate
                         event.endDate = endDate
-                        event.title = title ?? ""
+                        event.title = (title ?? "") + identifier
                         event.calendar = eventStore.defaultCalendarForNewEvents
                         try eventStore.saveEvent(event, span: .ThisEvent)
-                        CalendarStore.saveEventId(event.eventIdentifier)
                         print("event added " + event.eventIdentifier + " " + NSDateFormatter().stringFromDate(event.startDate))
                     }
 
@@ -86,13 +68,16 @@ struct Calendar {
                 print("error")
             } else {
                 let predicate = eventStore.predicateForEventsWithStartDate(start.toDate(), endDate: end.toDate(), calendars: [eventStore.defaultCalendarForNewEvents])
-                let events = eventStore.eventsMatchingPredicate(predicate).filter {
-                    do {
-                        return CalendarStore.storedEvents.contains($0.eventIdentifier)
+                let events = eventStore.eventsMatchingPredicate(predicate).filter { event in
+                    if (event.title.characters.count > 0 ) {
+                        return event.title.substringFromIndex(event.title.endIndex.predecessor()) == identifier
+                    } else  {
+                        return false
                     }
                 }
+                events.forEach { e in print(e.title) }
                  callback(events.map {
-                    e in CalendarEvent(startDate: e.startDate, endDate: e.endDate, identifier: e.eventIdentifier, title: e.title)
+                    e in CalendarEvent(startDate: e.startDate, endDate: e.endDate, identifier: e.eventIdentifier, title: e.title.substringToIndex(e.title.endIndex.predecessor()))
                 })
             }
         })
