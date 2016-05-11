@@ -41,18 +41,26 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e6v-cY-q33">
                                         <rect key="frame" x="8" y="109" width="544" height="90"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ILv-ge-NvF">
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="8Os-BK-eDH">
                                                 <rect key="frame" x="0.0" y="0.0" width="30" height="90"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ILv-ge-NvF">
+                                                        <rect key="frame" x="0.0" y="0.0" width="30" height="90"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="30" id="fhO-4F-i9h"/>
+                                                        </constraints>
+                                                        <state key="normal" image="ic_favorite_border">
+                                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="clickFavorite:" destination="BYZ-38-t0r" eventType="touchUpInside" id="dKy-Hs-UMc"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="30" id="fhO-4F-i9h"/>
+                                                    <constraint firstAttribute="width" constant="30" id="KSb-BA-B7P"/>
                                                 </constraints>
-                                                <state key="normal" image="ic_favorite_border">
-                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="clickFavorite:" destination="BYZ-38-t0r" eventType="touchUpInside" id="dKy-Hs-UMc"/>
-                                                </connections>
-                                            </button>
+                                            </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="zHv-Gf-pdQ">
                                                 <rect key="frame" x="30" y="0.0" width="484" height="90"/>
                                                 <subviews>
@@ -102,10 +110,6 @@
                                                 </connections>
                                             </button>
                                         </subviews>
-                                        <constraints>
-                                            <constraint firstItem="TDI-Bx-PwQ" firstAttribute="leading" secondItem="zHv-Gf-pdQ" secondAttribute="trailing" constant="8" id="9u2-xm-zxS"/>
-                                            <constraint firstItem="zHv-Gf-pdQ" firstAttribute="leading" secondItem="ILv-ge-NvF" secondAttribute="trailing" constant="8" id="q2O-3A-4M6"/>
-                                        </constraints>
                                     </stackView>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="cX6-wt-Xj0">
                                         <rect key="frame" x="16" y="207" width="528" height="128"/>
@@ -131,8 +135,8 @@
                                     <constraint firstItem="e6v-cY-q33" firstAttribute="leading" secondItem="tbB-po-kQM" secondAttribute="leading" constant="8" id="ewK-oA-OI5"/>
                                 </constraints>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" distribution="fillEqually" alignment="firstBaseline" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="MXk-rI-3cw">
-                                <rect key="frame" x="28" y="431" width="544" height="30"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="firstBaseline" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="MXk-rI-3cw">
+                                <rect key="frame" x="28" y="415" width="544" height="30"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cnO-EB-CJn" userLabel="Skip">
                                         <rect key="frame" x="0.0" y="0.0" width="264" height="30"/>
