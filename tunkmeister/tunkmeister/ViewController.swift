@@ -12,14 +12,10 @@ import EventKit
 class TimePicker: UIDatePicker {
     override init(frame: CGRect) {
         super.init(frame: frame)
-        print("init")
     }
 
     required init(coder aDecoder: NSCoder) {
         fatalError("This class does not support NSCoding")
-    }
-    deinit {
-        print("deinit")
     }
 }
 
@@ -63,9 +59,9 @@ struct FavoriteEvent {
         return dictionary
     }
 
-    func matches(startDateMaybe: NSDate?, endDateMaybe: NSDate?) -> Bool {
+    func matches(startDateMaybe: NSDate?, endDateMaybe: NSDate?, titleMaybe: String?) -> Bool {
         if let startDate = startDateMaybe, endDate = endDateMaybe {
-            return startDate.hour() == startHour && startDate.minutes() == startMinutes && endDate.hour() == endHour && endDate.minutes() == endMinutes
+            return startDate.hour() == startHour && startDate.minutes() == startMinutes && endDate.hour() == endHour && endDate.minutes() == endMinutes && titleMaybe == title
         } else {
             return false
         }
@@ -124,10 +120,8 @@ class ViewController: UIViewController, WeekViewDelegate, UICollectionViewDataSo
     @IBAction func clickFavorite(sender: UIButton) {
         if (sender.selected) {
             if let i = findSelectedFavoriteIndex() {
-                print("removing \(i) \(self.favorites.count)")
                 self.favorites.removeAtIndex(i)
                 if let paths = self.favoritesView.indexPathsForSelectedItems() {
-                    print("removing paths \(paths)")
                     self.favoritesView.deleteItemsAtIndexPaths(paths)
                 }
             }
@@ -199,7 +193,7 @@ class ViewController: UIViewController, WeekViewDelegate, UICollectionViewDataSo
             endTimeField.text = text
             self.endTime = date
         default:
-            print("Lol")
+            return
         }
         if let startDate = startTime, endDate = endTime {
             if (startDate.compare(endDate) == NSComparisonResult.OrderedDescending) {
@@ -215,8 +209,8 @@ class ViewController: UIViewController, WeekViewDelegate, UICollectionViewDataSo
         }
     }
 
+
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("count \(self.favorites.count)")
         return self.favorites.count
     }
 
@@ -225,7 +219,6 @@ class ViewController: UIViewController, WeekViewDelegate, UICollectionViewDataSo
     }
 
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        print("indexPath \(indexPath.row)")
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("favoriteEvent", forIndexPath: indexPath) as! FavoriteEventCell
         let f = favorites[indexPath.row]
         let title = f.title ?? ""
@@ -233,7 +226,7 @@ class ViewController: UIViewController, WeekViewDelegate, UICollectionViewDataSo
         formatter.minimumIntegerDigits = 2
         cell.label.text = String(format: "%02d:%02d-%02d:%02d", f.startHour, f.startMinutes, f.endHour, f.endMinutes) + " " + title
         cell.label.sizeToFit()
-        cell.selected = f.matches(startTime, endDateMaybe: endTime)
+        cell.selected = f.matches(startTime, endDateMaybe: endTime, titleMaybe: title)
         cell.label.textColor = cell.selected ? UIColor.blackColor() : UIColor.grayColor()
         return cell
     }
@@ -247,7 +240,6 @@ class ViewController: UIViewController, WeekViewDelegate, UICollectionViewDataSo
     }
 
     func selectedFavorite(collectionView: UICollectionView?, indexPath: NSIndexPath) {
-        print("selected \(indexPath)")
         (collectionView?.cellForItemAtIndexPath(indexPath) as? FavoriteEventCell)?.label.textColor = UIColor.blackColor()
         let favorite = favorites[indexPath.row]
         let startTime = daySelection.currentDay().toDate(favorite.startHour, minutes: favorite.startMinutes)
@@ -258,7 +250,6 @@ class ViewController: UIViewController, WeekViewDelegate, UICollectionViewDataSo
 
     func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
         (collectionView.cellForItemAtIndexPath(indexPath) as! FavoriteEventCell).label.textColor = UIColor.grayColor()
-        print("deselect \(indexPath)")
     }
 
     @IBAction func clearDay(sender: UIButton) {
@@ -308,11 +299,12 @@ class ViewController: UIViewController, WeekViewDelegate, UICollectionViewDataSo
         favoritesView.dataSource = self
         favoritesView.allowsMultipleSelection = false
         favoritesView.registerClass(FavoriteEventCell.self, forCellWithReuseIdentifier: "favoriteEvent")
-        startTimeField.addTarget(self, action: #selector(timeChange), forControlEvents: .EditingDidEnd)
-        endTimeField.addTarget(self, action: #selector(timeChange), forControlEvents: .EditingDidEnd)
+        startTimeField.addTarget(self, action: #selector(valueChange), forControlEvents: .EditingDidEnd)
+        endTimeField.addTarget(self, action: #selector(valueChange), forControlEvents: .EditingDidEnd)
+        descriptionField.addTarget(self, action: #selector(valueChange), forControlEvents: .EditingChanged)
     }
 
-    func timeChange(textField: UITextField) {
+    func valueChange(textField: UITextField) {
         updateButtonStates()
     }
 
@@ -323,9 +315,8 @@ class ViewController: UIViewController, WeekViewDelegate, UICollectionViewDataSo
         case UISwipeGestureRecognizerDirection.Right:
             daySelection.previousWeek()
         default:
-            print("voe lol")
+            return
         }
-        print(sender.direction)
     }
 
     override func didReceiveMemoryWarning() {
@@ -343,12 +334,9 @@ class ViewController: UIViewController, WeekViewDelegate, UICollectionViewDataSo
         updateValues(event?.startDate, end: event?.endDate, title: event?.title)
         favoritesView.reloadData()
         if let index = findSelectedFavoriteIndex() {
-            print("favorite found \(index)")
             self.favoritesView.reloadData()
             self.favoritesView.selectItemAtIndexPath(NSIndexPath(forRow: index, inSection: 0), animated: false, scrollPosition: .None)
 
-        } else {
-            print("favorite not found")
         }
         updateButtonStates()
     }
@@ -365,7 +353,6 @@ class ViewController: UIViewController, WeekViewDelegate, UICollectionViewDataSo
         saveButton.enabled = (startTime != nil && endTime != nil && startTime != endTime) || (startTime == nil && endTime == nil && event != nil)
         favoriteButton.hidden = !saveButton.enabled
         let index = findSelectedFavoriteIndex()
-        print("selected \(index)")
         favoriteButton.selected = index != nil
         clearButton.enabled = startTime != nil || endTime != nil
         endEditing()
@@ -383,7 +370,7 @@ class ViewController: UIViewController, WeekViewDelegate, UICollectionViewDataSo
 
     func findSelectedFavoriteIndex() -> Int? {
         return favorites.indexOf {
-            $0.matches(startTime, endDateMaybe: endTime)
+            $0.matches(startTime, endDateMaybe: endTime, titleMaybe: descriptionField.text)
         }
 
     }

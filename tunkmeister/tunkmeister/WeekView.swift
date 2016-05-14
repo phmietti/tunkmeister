@@ -75,7 +75,6 @@ class WeekView: UIView {
 
     required init?(coder aDecoder: NSCoder) {
         let date = NSUserDefaults.standardUserDefaults().objectForKey("date") as? NSDate ?? NSDate()
-        print("read")
         let ymd = YMD(date: date)
         self.selection = ymd.dayOfWeek() - 1
         self.firstDayOfWeek = ymd.diffDays(-self.selection)
@@ -156,7 +155,6 @@ class WeekView: UIView {
 
     private func updateViewState() {
         NSUserDefaults.standardUserDefaults().setObject(firstDayOfWeek.diffDays(selection).toDate(), forKey: "date")
-        print("stored")
         for (index, button) in dayButtons.enumerate() {
             button.selected = index == selection
             dayTitleLabels[index].textColor = button.currentTitleColor

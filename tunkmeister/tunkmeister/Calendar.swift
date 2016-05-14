@@ -24,7 +24,6 @@ struct Calendar {
     static let identifier = "\u{2063}"
 
     static func persistDay(startDate: NSDate?, endDate: NSDate?, title: String?, existingEvent: CalendarEvent?, errorCallback: () -> Void, callback: () -> Void) {
-        print("storing \(startDate) \(endDate)")
         let eventStore = EKEventStore()
         eventStore.requestAccessToEntityType(.Event, completion: {
             (granted, error) in
@@ -33,9 +32,7 @@ struct Calendar {
             } else {
                 do {
                     if let event = existingEvent {
-                        print(event.identifier)
                         if let eventToBeRemoved = eventStore.eventWithIdentifier(event.identifier!) {
-                            print("deleting event")
                             try eventStore.removeEvent(eventToBeRemoved, span: .ThisEvent)
                         }
                     }
@@ -47,11 +44,10 @@ struct Calendar {
                         event.title = (title ?? "") + identifier
                         event.calendar = eventStore.defaultCalendarForNewEvents
                         try eventStore.saveEvent(event, span: .ThisEvent)
-                        print("event added " + event.eventIdentifier + " " + NSDateFormatter().stringFromDate(event.startDate))
                     }
 
-                } catch let error as NSError {
-                    print("no voe lol \(error.localizedDescription)")
+                } catch {
+                    errorCallback()
                 }
                 callback()
 
