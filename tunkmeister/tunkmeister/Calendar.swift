@@ -23,13 +23,13 @@ struct Calendar {
 
     static let identifier = "\u{2063}"
 
-    static func persistDay(startDate: NSDate?, endDate: NSDate?, title: String?, existingEvent: CalendarEvent?, callback: () -> Void) {
+    static func persistDay(startDate: NSDate?, endDate: NSDate?, title: String?, existingEvent: CalendarEvent?, errorCallback: () -> Void, callback: () -> Void) {
         print("storing \(startDate) \(endDate)")
         let eventStore = EKEventStore()
         eventStore.requestAccessToEntityType(.Event, completion: {
             (granted, error) in
             if !granted || error != nil {
-                print("error")
+                errorCallback()
             } else {
                 do {
                     if let event = existingEvent {
@@ -59,13 +59,13 @@ struct Calendar {
         })
     }
 
-    static func getEvents(start: YMD, end: YMD, callback: ([CalendarEvent]) -> Void) {
+    static func getEvents(start: YMD, end: YMD, errorCallback: () -> Void, callback: ([CalendarEvent]) -> Void) {
         print("getting events")
         let eventStore = EKEventStore()
         eventStore.requestAccessToEntityType(.Event, completion: {
             (granted, error) in
             if !granted || error != nil {
-                print("error")
+                errorCallback()
             } else {
                 let predicate = eventStore.predicateForEventsWithStartDate(start.toDate(), endDate: end.toDate(), calendars: [eventStore.defaultCalendarForNewEvents])
                 let events = eventStore.eventsMatchingPredicate(predicate).filter { event in

@@ -272,12 +272,25 @@ class ViewController: UIViewController, WeekViewDelegate, UICollectionViewDataSo
     }
 
     @IBAction func saveEvent(sender: UIButton) {
-        Calendar.persistDay(startTime, endDate: endTime, title: descriptionField.text, existingEvent: event, callback: {
-            [weak self] in
-            dispatch_async(dispatch_get_main_queue()) {
-                self?.nextDay()
-            }
-        })
+        Calendar.persistDay(startTime,
+                endDate: endTime,
+                title: descriptionField.text,
+                existingEvent: event,
+                errorCallback: self.errorInCalendar,
+                callback: {
+                    [weak self] in
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self?.nextDay()
+                    }
+                })
+    }
+
+    func errorInCalendar() {
+        dispatch_async(dispatch_get_main_queue()) {
+            let alert = UIAlertController(title: "Cannot access calendar", message: "Please allow calendar access to this app. Otherwise the app is unsuable.", preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
     }
 
     override func viewDidLoad() {

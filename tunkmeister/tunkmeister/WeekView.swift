@@ -59,6 +59,8 @@ func ==(lhs: YMD, rhs: YMD) -> Bool {
 
 protocol WeekViewDelegate {
     func dayChanged(ymd: YMD, event: CalendarEvent?)
+
+    func errorInCalendar()
 }
 
 
@@ -100,6 +102,7 @@ class WeekView: UIView {
             addSubview(button)
             addSubview(label)
         }
+        updateViewState()
     }
 
     override func layoutSubviews() {
@@ -118,7 +121,6 @@ class WeekView: UIView {
             labelFrame.origin.x = x
             label.frame = labelFrame
         }
-        updateViewState()
     }
 
 
@@ -159,26 +161,32 @@ class WeekView: UIView {
             button.selected = index == selection
             dayTitleLabels[index].textColor = button.currentTitleColor
         }
-        Calendar.getEvents(firstDayOfWeek, end: firstDayOfWeek.diffDays(daysInWeek), callback: {
-            [weak self] events in
-            dispatch_async(dispatch_get_main_queue()) {
-                if let daysInWeek  = self?.daysInWeek, firstDayOfWeek = self?.firstDayOfWeek, currentDay = self?.currentDay() {
-                    for d in 0 ..< daysInWeek {
-                        let iterYmd = firstDayOfWeek.diffDays(d)
-                        let title = String(iterYmd.day)
-                        let button = self?.dayButtons[d]
-                        button?.setTitle(title, forState: .Normal)
-                        let dayEvents = events.filter {
-                            (e) in YMD(date: e.startDate) == iterYmd
-                        }
-                        button?.layer.borderColor = dayEvents.isEmpty ? UIColor.whiteColor().CGColor : UIColor.blackColor().CGColor
-                        if (d == self?.selection) {
-                            self?.delegate?.dayChanged(currentDay, event: dayEvents.first)
+        Calendar.getEvents(firstDayOfWeek,
+                end: firstDayOfWeek.diffDays(daysInWeek),
+                errorCallback: {
+                    [weak self] in
+                    self?.delegate?.errorInCalendar()
+                },
+                callback: {
+                    [weak self] events in
+                    dispatch_async(dispatch_get_main_queue()) {
+                        if let daysInWeek = self?.daysInWeek, firstDayOfWeek = self?.firstDayOfWeek, currentDay = self?.currentDay() {
+                            for d in 0 ..< daysInWeek {
+                                let iterYmd = firstDayOfWeek.diffDays(d)
+                                let title = String(iterYmd.day)
+                                let button = self?.dayButtons[d]
+                                button?.setTitle(title, forState: .Normal)
+                                let dayEvents = events.filter {
+                                    (e) in YMD(date: e.startDate) == iterYmd
+                                }
+                                button?.layer.borderColor = dayEvents.isEmpty ? UIColor.whiteColor().CGColor : UIColor.blackColor().CGColor
+                                if (d == self?.selection) {
+                                    self?.delegate?.dayChanged(currentDay, event: dayEvents.first)
+                                }
+                            }
                         }
                     }
-                }
-            }
-        })
+                })
 
 
     }
