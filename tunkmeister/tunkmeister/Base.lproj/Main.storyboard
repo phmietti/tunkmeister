@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -20,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="tbB-po-kQM">
-                                <rect key="frame" x="20" y="72" width="560" height="335"/>
+                                <rect key="frame" x="20" y="72" width="560" height="520"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Month" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ydv-VW-ZMm">
                                         <rect key="frame" x="256" y="0.0" width="50" height="21"/>
@@ -38,13 +37,13 @@
                                             <constraint firstAttribute="height" constant="72" id="JcX-zc-H7u"/>
                                         </constraints>
                                     </view>
-                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e6v-cY-q33">
+                                    <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e6v-cY-q33">
                                         <rect key="frame" x="8" y="109" width="544" height="90"/>
                                         <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="8Os-BK-eDH">
+                                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="8Os-BK-eDH">
                                                 <rect key="frame" x="0.0" y="0.0" width="30" height="90"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ILv-ge-NvF">
+                                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ILv-ge-NvF">
                                                         <rect key="frame" x="0.0" y="0.0" width="30" height="90"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="30" id="fhO-4F-i9h"/>
@@ -61,10 +60,10 @@
                                                     <constraint firstAttribute="width" constant="30" id="KSb-BA-B7P"/>
                                                 </constraints>
                                             </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="zHv-Gf-pdQ">
+                                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="zHv-Gf-pdQ">
                                                 <rect key="frame" x="30" y="0.0" width="484" height="90"/>
                                                 <subviews>
-                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Start time" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="g2L-Ms-reU">
+                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="center" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Start time" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="g2L-Ms-reU">
                                                         <rect key="frame" x="0.0" y="0.0" width="484" height="30"/>
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -73,7 +72,7 @@
                                                             <action selector="startDateEditing:" destination="BYZ-38-t0r" eventType="editingDidBegin" id="dp2-r8-e8U"/>
                                                         </connections>
                                                     </textField>
-                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="End time" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Q4Q-hy-i0R">
+                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="End time" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Q4Q-hy-i0R">
                                                         <rect key="frame" x="0.0" y="30" width="484" height="30"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits"/>
@@ -81,42 +80,32 @@
                                                             <action selector="endTimeEditing:" destination="BYZ-38-t0r" eventType="editingDidBegin" id="pWw-cC-cfi"/>
                                                         </connections>
                                                     </textField>
-                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Description" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Zro-HP-I4I">
+                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Description" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Zro-HP-I4I">
                                                         <rect key="frame" x="0.0" y="60" width="484" height="30"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
                                                 </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="90" id="zn0-yC-fPh"/>
+                                                </constraints>
                                             </stackView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TDI-Bx-PwQ">
+                                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TDI-Bx-PwQ">
                                                 <rect key="frame" x="514" y="0.0" width="30" height="90"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="24" id="JqW-4a-Otp"/>
-                                                    <constraint firstAttribute="height" constant="24" id="Mmh-5l-tmW"/>
                                                     <constraint firstAttribute="width" constant="30" id="bMT-5s-RgX"/>
-                                                    <constraint firstAttribute="width" secondItem="TDI-Bx-PwQ" secondAttribute="height" multiplier="1:1" id="cA8-w6-VCb"/>
                                                 </constraints>
                                                 <inset key="imageEdgeInsets" minX="1" minY="1" maxX="1" maxY="1"/>
                                                 <state key="normal" image="clear_black"/>
-                                                <variation key="default">
-                                                    <mask key="constraints">
-                                                        <exclude reference="JqW-4a-Otp"/>
-                                                        <exclude reference="Mmh-5l-tmW"/>
-                                                        <exclude reference="cA8-w6-VCb"/>
-                                                    </mask>
-                                                </variation>
                                                 <connections>
                                                     <action selector="clearDay:" destination="BYZ-38-t0r" eventType="touchUpInside" id="l1W-BX-RCo"/>
                                                 </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
-                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="cX6-wt-Xj0">
-                                        <rect key="frame" x="16" y="207" width="528" height="128"/>
+                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="cX6-wt-Xj0">
+                                        <rect key="frame" x="16" y="207" width="528" height="245"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="128" id="YTg-Ae-mvt"/>
-                                        </constraints>
                                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="pXh-JU-V2b">
                                             <size key="itemSize" width="50" height="50"/>
                                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -125,6 +114,29 @@
                                         </collectionViewFlowLayout>
                                         <cells/>
                                     </collectionView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="firstBaseline" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="MXk-rI-3cw">
+                                        <rect key="frame" x="8" y="460" width="544" height="60"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cnO-EB-CJn" userLabel="Skip">
+                                                <rect key="frame" x="0.0" y="15" width="264" height="30"/>
+                                                <state key="normal" title="Skip"/>
+                                                <connections>
+                                                    <action selector="skipDay:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kQS-0B-DPJ"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PYs-Pu-ix8">
+                                                <rect key="frame" x="280" y="15" width="264" height="30"/>
+                                                <state key="normal" title="Save"/>
+                                                <connections>
+                                                    <action selector="saveEvent:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vUo-Pe-GgU"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="FmM-NF-NbW"/>
+                                            <constraint firstItem="cnO-EB-CJn" firstAttribute="top" secondItem="MXk-rI-3cw" secondAttribute="top" constant="15" id="MKI-kc-dZe"/>
+                                        </constraints>
+                                    </stackView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="CBC-uZ-hrH" firstAttribute="leading" secondItem="tbB-po-kQM" secondAttribute="leading" constant="8" id="1kq-1t-pD1"/>
@@ -132,37 +144,18 @@
                                     <constraint firstAttribute="trailing" secondItem="CBC-uZ-hrH" secondAttribute="trailing" constant="8" id="8fx-oV-0dY"/>
                                     <constraint firstItem="cX6-wt-Xj0" firstAttribute="leading" secondItem="tbB-po-kQM" secondAttribute="leading" constant="16" id="JPJ-D7-SoR"/>
                                     <constraint firstAttribute="trailing" secondItem="cX6-wt-Xj0" secondAttribute="trailing" constant="16" id="W15-Ce-tnQ"/>
+                                    <constraint firstAttribute="trailing" secondItem="MXk-rI-3cw" secondAttribute="trailing" constant="8" id="dq6-sQ-9r3"/>
                                     <constraint firstItem="e6v-cY-q33" firstAttribute="leading" secondItem="tbB-po-kQM" secondAttribute="leading" constant="8" id="ewK-oA-OI5"/>
+                                    <constraint firstItem="MXk-rI-3cw" firstAttribute="leading" secondItem="tbB-po-kQM" secondAttribute="leading" constant="8" id="ug2-Hv-TsY"/>
                                 </constraints>
-                            </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="firstBaseline" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="MXk-rI-3cw">
-                                <rect key="frame" x="28" y="415" width="544" height="30"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cnO-EB-CJn" userLabel="Skip">
-                                        <rect key="frame" x="0.0" y="0.0" width="264" height="30"/>
-                                        <state key="normal" title="Skip"/>
-                                        <connections>
-                                            <action selector="skipDay:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kQS-0B-DPJ"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PYs-Pu-ix8">
-                                        <rect key="frame" x="280" y="0.0" width="264" height="30"/>
-                                        <state key="normal" title="Save"/>
-                                        <connections>
-                                            <action selector="saveEvent:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vUo-Pe-GgU"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="tbB-po-kQM" secondAttribute="trailing" id="0PH-qP-svc"/>
-                            <constraint firstItem="tbB-po-kQM" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" symbolic="YES" id="Fd3-sB-ph5"/>
-                            <constraint firstItem="MXk-rI-3cw" firstAttribute="top" secondItem="tbB-po-kQM" secondAttribute="bottom" constant="8" id="cv9-H4-EBr"/>
-                            <constraint firstItem="MXk-rI-3cw" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="8" id="foi-x1-cVS"/>
+                            <constraint firstItem="tbB-po-kQM" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="Fd3-sB-ph5"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="tbB-po-kQM" secondAttribute="bottom" constant="8" id="dQh-M1-DIZ"/>
                             <constraint firstItem="tbB-po-kQM" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="j8Z-Sv-qkU"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="MXk-rI-3cw" secondAttribute="trailing" constant="8" id="jzF-G4-vtj"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="vPh-oW-2Fr"/>
