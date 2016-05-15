@@ -376,8 +376,8 @@ class ViewController: UIViewController, WeekViewDelegate, UICollectionViewDataSo
 
     }
 
-    func textFieldShouldReturn(userText: UITextField?) -> Bool {
-        userText?.resignFirstResponder()
+    func textFieldShouldReturn(userText: UITextField) -> Bool {
+        userText.resignFirstResponder()
         return true;
     }
 
