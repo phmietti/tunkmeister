@@ -78,7 +78,7 @@ struct FavoriteEvent {
     }
 }
 
-class ViewController: UIViewController, WeekViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate {
+class ViewController: UIViewController, WeekViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UITextFieldDelegate {
 
     @IBOutlet weak var monthLabel: UILabel!
     @IBOutlet weak var daySelection: WeekView!
@@ -299,6 +299,7 @@ class ViewController: UIViewController, WeekViewDelegate, UICollectionViewDataSo
         favoritesView.dataSource = self
         favoritesView.allowsMultipleSelection = false
         favoritesView.registerClass(FavoriteEventCell.self, forCellWithReuseIdentifier: "favoriteEvent")
+        descriptionField.delegate = self
         startTimeField.addTarget(self, action: #selector(valueChange), forControlEvents: .EditingDidEnd)
         endTimeField.addTarget(self, action: #selector(valueChange), forControlEvents: .EditingDidEnd)
         descriptionField.addTarget(self, action: #selector(valueChange), forControlEvents: .EditingChanged)
@@ -374,6 +375,12 @@ class ViewController: UIViewController, WeekViewDelegate, UICollectionViewDataSo
         }
 
     }
+
+    func textFieldShouldReturn(userText: UITextField?) -> Bool {
+        userText?.resignFirstResponder()
+        return true;
+    }
+
 
 }
 
