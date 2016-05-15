@@ -56,7 +56,6 @@ struct Calendar {
     }
 
     static func getEvents(start: YMD, end: YMD, errorCallback: () -> Void, callback: ([CalendarEvent]) -> Void) {
-        print("getting events")
         let eventStore = EKEventStore()
         eventStore.requestAccessToEntityType(.Event, completion: {
             (granted, error) in
@@ -71,7 +70,6 @@ struct Calendar {
                         return false
                     }
                 }
-                events.forEach { e in print(e.title) }
                  callback(events.map {
                     e in CalendarEvent(startDate: e.startDate, endDate: e.endDate, identifier: e.eventIdentifier, title: e.title.substringToIndex(e.title.endIndex.predecessor()))
                 })
