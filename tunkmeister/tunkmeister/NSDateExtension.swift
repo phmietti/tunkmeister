@@ -13,6 +13,10 @@ extension NSDate {
         return NSCalendar.currentCalendar().component(.Year, fromDate: self)
     }
 
+    func month() -> Int {
+         return NSCalendar.currentCalendar().component(.Month, fromDate: self)
+    }
+
     func hour() -> Int {
         return NSCalendar.currentCalendar().component(.Hour, fromDate: self)
     }

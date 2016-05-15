@@ -16,6 +16,7 @@
 		39F9FAAF1C9334B200C9495A /* WeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F9FAAE1C9334B200C9495A /* WeekView.swift */; };
 		39F9FAB11C93F20000C9495A /* EventTimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F9FAB01C93F20000C9495A /* EventTimePicker.swift */; };
 		39F9FAB31C95D4BE00C9495A /* NSDateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F9FAB21C95D4BE00C9495A /* NSDateExtension.swift */; };
+		B003381BE1EC4498E7121595 /* CalendarStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0033D4675A2BB58D37DA3A0 /* CalendarStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		39F9FAAE1C9334B200C9495A /* WeekView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekView.swift; sourceTree = "<group>"; };
 		39F9FAB01C93F20000C9495A /* EventTimePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTimePicker.swift; sourceTree = "<group>"; };
 		39F9FAB21C95D4BE00C9495A /* NSDateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDateExtension.swift; sourceTree = "<group>"; };
+		B0033D4675A2BB58D37DA3A0 /* CalendarStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +74,7 @@
 				39F9FAB01C93F20000C9495A /* EventTimePicker.swift */,
 				39F9FAB21C95D4BE00C9495A /* NSDateExtension.swift */,
 				396CCF131CA858C500858C01 /* Calendar.swift */,
+				B0033D4675A2BB58D37DA3A0 /* CalendarStore.swift */,
 			);
 			path = tunkmeister;
 			sourceTree = "<group>";
@@ -153,6 +156,7 @@
 				39799A991C8C863100CAB61B /* AppDelegate.swift in Sources */,
 				39F9FAAF1C9334B200C9495A /* WeekView.swift in Sources */,
 				39F9FAB11C93F20000C9495A /* EventTimePicker.swift in Sources */,
+				B003381BE1EC4498E7121595 /* CalendarStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

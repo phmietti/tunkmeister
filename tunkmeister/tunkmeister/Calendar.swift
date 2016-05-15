@@ -34,6 +34,7 @@ struct Calendar {
                     if let event = existingEvent {
                         if let eventToBeRemoved = eventStore.eventWithIdentifier(event.identifier!) {
                             try eventStore.removeEvent(eventToBeRemoved, span: .ThisEvent)
+                            CalendarStore.removeEvent(eventToBeRemoved)
                         }
                     }
                     if let startDate = startDate, endDate = endDate {
@@ -44,6 +45,7 @@ struct Calendar {
                         event.title = (title ?? "") + identifier
                         event.calendar = eventStore.defaultCalendarForNewEvents
                         try eventStore.saveEvent(event, span: .ThisEvent)
+                        CalendarStore.saveEvent(event)
                     }
 
                 } catch {
@@ -64,11 +66,7 @@ struct Calendar {
             } else {
                 let predicate = eventStore.predicateForEventsWithStartDate(start.toDate(), endDate: end.toDate(), calendars: [eventStore.defaultCalendarForNewEvents])
                 let events = eventStore.eventsMatchingPredicate(predicate).filter { event in
-                    if (event.title.characters.count > 0 ) {
-                        return event.title.substringFromIndex(event.title.endIndex.predecessor()) == identifier
-                    } else  {
-                        return false
-                    }
+                    return CalendarStore.hasEvent(event)
                 }
                  callback(events.map {
                     e in CalendarEvent(startDate: e.startDate, endDate: e.endDate, identifier: e.eventIdentifier, title: e.title.substringToIndex(e.title.endIndex.predecessor()))
