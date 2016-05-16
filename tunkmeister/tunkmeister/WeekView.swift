@@ -77,7 +77,7 @@ class WeekView: UIView {
         let date = NSUserDefaults.standardUserDefaults().objectForKey("date") as? NSDate ?? NSDate()
         let ymd = YMD(date: date)
         self.selection = ymd.dayOfWeek() - 1
-        self.firstDayOfWeek = ymd.diffDays(-self.selection)
+        self.firstDayOfWeek = ymd.diffDays(1 - self.selection)
         super.init(coder: aDecoder)
         for d in 0 ..< daysInWeek {
             let iterYmd = firstDayOfWeek.diffDays(d)
