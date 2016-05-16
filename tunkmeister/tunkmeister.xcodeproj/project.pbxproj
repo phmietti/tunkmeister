@@ -18,6 +18,7 @@
 		39F9FAAF1C9334B200C9495A /* WeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F9FAAE1C9334B200C9495A /* WeekView.swift */; };
 		39F9FAB11C93F20000C9495A /* EventTimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F9FAB01C93F20000C9495A /* EventTimePicker.swift */; };
 		39F9FAB31C95D4BE00C9495A /* NSDateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F9FAB21C95D4BE00C9495A /* NSDateExtension.swift */; };
+		B003344EA4E66F170B9394C4 /* YMD.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0033E2D314856CCC50AA793 /* YMD.swift */; };
 		B003381BE1EC4498E7121595 /* CalendarStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0033D4675A2BB58D37DA3A0 /* CalendarStore.swift */; };
 /* End PBXBuildFile section */
 
@@ -36,6 +37,7 @@
 		39F9FAB01C93F20000C9495A /* EventTimePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTimePicker.swift; sourceTree = "<group>"; };
 		39F9FAB21C95D4BE00C9495A /* NSDateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDateExtension.swift; sourceTree = "<group>"; };
 		B0033D4675A2BB58D37DA3A0 /* CalendarStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarStore.swift; sourceTree = "<group>"; };
+		B0033E2D314856CCC50AA793 /* YMD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YMD.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,7 @@
 				B0033D4675A2BB58D37DA3A0 /* CalendarStore.swift */,
 				3990EB571CE9A23C009465FE /* Fabric.framework */,
 				3990EB581CE9A23C009465FE /* Crashlytics.framework */,
+				B0033E2D314856CCC50AA793 /* YMD.swift */,
 			);
 			path = tunkmeister;
 			sourceTree = "<group>";
@@ -182,6 +185,7 @@
 				39F9FAAF1C9334B200C9495A /* WeekView.swift in Sources */,
 				39F9FAB11C93F20000C9495A /* EventTimePicker.swift in Sources */,
 				B003381BE1EC4498E7121595 /* CalendarStore.swift in Sources */,
+				B003344EA4E66F170B9394C4 /* YMD.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
