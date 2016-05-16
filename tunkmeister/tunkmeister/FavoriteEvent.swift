@@ -41,4 +41,8 @@ struct FavoriteEvent {
         let title = dictionary["title"] as? String
         return FavoriteEvent(startHour: startHour, startMinutes: startMinutes, endHour: endHour, endMinutes: endMinutes, title: title)
     }
+
+    func startMinutesFromMidnight() -> Int {
+        return self.startHour * 60 + self.startMinutes
+    }
 }

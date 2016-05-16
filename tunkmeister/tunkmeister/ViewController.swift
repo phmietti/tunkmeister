@@ -65,6 +65,7 @@ class ViewController: UIViewController, WeekViewDelegate, UICollectionViewDataSo
         self.favorites = (NSUserDefaults.standardUserDefaults().arrayForKey("favorites") as? Array<NSDictionary> ?? Array()).map {
             (dict) -> FavoriteEvent in FavoriteEvent.decode(dict)
         }
+        self.favorites.sortInPlace { $0.startMinutesFromMidnight() < $1.startMinutesFromMidnight() }
         super.init(coder: aDecoder)
     }
 
@@ -89,6 +90,7 @@ class ViewController: UIViewController, WeekViewDelegate, UICollectionViewDataSo
             }
         } else if let s = startTime, e = endTime {
             self.favorites.append(FavoriteEvent(startHour: s.hour(), startMinutes: s.minutes(), endHour: e.hour(), endMinutes: e.minutes(), title: descriptionField.text))
+            self.favorites.sortInPlace { $0.startMinutesFromMidnight() < $1.startMinutesFromMidnight() }
             self.favoritesView.reloadData()
             self.favoritesView.selectItemAtIndexPath(NSIndexPath(forRow: self.favorites.count - 1, inSection: 0), animated: false, scrollPosition: .None)
         }
