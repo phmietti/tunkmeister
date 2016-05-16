@@ -13,6 +13,8 @@
 		39799A9E1C8C863100CAB61B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 39799A9C1C8C863100CAB61B /* Main.storyboard */; };
 		39799AA01C8C863100CAB61B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 39799A9F1C8C863100CAB61B /* Assets.xcassets */; };
 		39799AA31C8C863100CAB61B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 39799AA11C8C863100CAB61B /* LaunchScreen.storyboard */; };
+		3990EB591CE9A23C009465FE /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3990EB571CE9A23C009465FE /* Fabric.framework */; };
+		3990EB5A1CE9A23C009465FE /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3990EB581CE9A23C009465FE /* Crashlytics.framework */; };
 		39F9FAAF1C9334B200C9495A /* WeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F9FAAE1C9334B200C9495A /* WeekView.swift */; };
 		39F9FAB11C93F20000C9495A /* EventTimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F9FAB01C93F20000C9495A /* EventTimePicker.swift */; };
 		39F9FAB31C95D4BE00C9495A /* NSDateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F9FAB21C95D4BE00C9495A /* NSDateExtension.swift */; };
@@ -28,6 +30,8 @@
 		39799A9F1C8C863100CAB61B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		39799AA21C8C863100CAB61B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		39799AA41C8C863100CAB61B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3990EB571CE9A23C009465FE /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = SOURCE_ROOT; };
+		3990EB581CE9A23C009465FE /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = SOURCE_ROOT; };
 		39F9FAAE1C9334B200C9495A /* WeekView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekView.swift; sourceTree = "<group>"; };
 		39F9FAB01C93F20000C9495A /* EventTimePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTimePicker.swift; sourceTree = "<group>"; };
 		39F9FAB21C95D4BE00C9495A /* NSDateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDateExtension.swift; sourceTree = "<group>"; };
@@ -39,6 +43,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3990EB5A1CE9A23C009465FE /* Crashlytics.framework in Frameworks */,
+				3990EB591CE9A23C009465FE /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,6 +81,8 @@
 				39F9FAB21C95D4BE00C9495A /* NSDateExtension.swift */,
 				396CCF131CA858C500858C01 /* Calendar.swift */,
 				B0033D4675A2BB58D37DA3A0 /* CalendarStore.swift */,
+				3990EB571CE9A23C009465FE /* Fabric.framework */,
+				3990EB581CE9A23C009465FE /* Crashlytics.framework */,
 			);
 			path = tunkmeister;
 			sourceTree = "<group>";
@@ -89,6 +97,7 @@
 				39799A911C8C863100CAB61B /* Sources */,
 				39799A921C8C863100CAB61B /* Frameworks */,
 				39799A931C8C863100CAB61B /* Resources */,
+				3990EB561CE9A20A009465FE /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -144,6 +153,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3990EB561CE9A20A009465FE /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Fabric.framework/run 33b3189e982ad861e9a5e6e46e0f0173f41eae0a c9af561d872fe856f42c88f27a1d1b85102437b35895bda11b448f904a343ab6";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		39799A911C8C863100CAB61B /* Sources */ = {
@@ -269,6 +294,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = tunkmeister/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = phmietti.tunkmeister;
@@ -280,6 +309,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = tunkmeister/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = phmietti.tunkmeister;
