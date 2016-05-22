@@ -36,6 +36,7 @@ class WeekView: UIView {
         self.selection = ymd.dayOfWeek() - 1
         self.firstDayOfWeek = ymd.diffDays(1 - self.selection)
         super.init(coder: aDecoder)
+        self.layer.cornerRadius = 5
         for d in 0 ..< daysInWeek {
             let iterYmd = firstDayOfWeek.diffDays(d)
             let button = UIButton()
@@ -64,7 +65,7 @@ class WeekView: UIView {
     override func layoutSubviews() {
         let buttonSize = Int(frame.size.height)
         let frameWidth = Int(frame.size.width)
-        let buttonWidth = frameWidth / daysInWeek
+        let buttonWidth = (frameWidth - daysInWeek) / daysInWeek
         var buttonFrame = CGRect(x: 0, y: 20, width: buttonWidth, height: buttonSize - 20)
         for (index, button) in dayButtons.enumerate() {
             let x = CGFloat(index * (buttonWidth + 1))

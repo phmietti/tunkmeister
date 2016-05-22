@@ -263,10 +263,22 @@ class ViewController: UIViewController, WeekViewDelegate, UICollectionViewDataSo
         favoritesView.dataSource = self
         favoritesView.allowsMultipleSelection = false
         favoritesView.registerClass(FavoriteEventCell.self, forCellWithReuseIdentifier: "favoriteEvent")
+        favoritesView.layer.cornerRadius = 5
         descriptionField.delegate = self
         startTimeField.addTarget(self, action: #selector(valueChange), forControlEvents: .EditingDidEnd)
         endTimeField.addTarget(self, action: #selector(valueChange), forControlEvents: .EditingDidEnd)
         descriptionField.addTarget(self, action: #selector(valueChange), forControlEvents: .EditingChanged)
+        if !UIAccessibilityIsReduceTransparencyEnabled() {
+            self.view.backgroundColor = UIColor.clearColor()
+
+            let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.ExtraLight)
+            let blurEffectView = UIVisualEffectView(effect: blurEffect)
+            //always fill the view
+            blurEffectView.frame = self.view.bounds
+            blurEffectView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+
+            self.view.insertSubview(blurEffectView, atIndex: 0) //if you have more UIViews, use an insertSubview API to place it where needed
+        }
     }
 
     func valueChange(textField: UITextField) {
